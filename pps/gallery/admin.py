@@ -6,7 +6,6 @@ class CategoryInLine(admin.TabularInline):
     extra = 0
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
     inlines = [
         CategoryInLine,
     ]
