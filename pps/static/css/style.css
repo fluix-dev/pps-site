@@ -1,3 +1,86 @@
 body {
   background-color: #1C1F1F;
+  color: white;
+  font-family: 'Montserrat',sans-serif;
+  font-size: 14px;
+}
+/* Written by Kyle Hamilton of candpgeneration.com
+CSS3 transitions - animated dropdown menu without javascript that plays nice in IE7+, FF, CHROME, SAFARI
+The original bare bones version can be found at: http://candpgeneration.com/CSS-dropdowns/CSS3-dropdown.html
+You are free to use this code any way you like.
+Please do not remove this comment. */
+
+/* the main menu */
+.navigation {
+  display:inline-block;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.navigation ul{
+  margin: 0 auto;
+  padding:0; /* gets rid of any inherited margins and padding */
+  list-style-type: none;
+  text-align: center;
+}
+
+.navigation > ul > li {
+  display:inline-block;
+
+}
+
+.navigation > ul > li + li{
+  margin-left:5px;
+}
+
+.navigation > ul > li > a {
+  background-color: #1C1F1F;
+  display: block;
+  padding: 8px 14px;
+  text-decoration: none;
+  color: white;
+}
+
+.navigation > ul > li > a:hover{
+  background-color: #233237;
+  color: white;
+}
+
+.navigation ul ul{
+  position:absolute;
+
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height 0.2s ease-in;
+  -moz-transition: height 0.2s ease-in;
+  -o-transition: height 0.2s ease-in;
+  -ms-transition: height 0.2s ease-in;
+  transition: height 0.2s ease-in;
+  text-align: left;
+}
+
+.navigation > ul > li:hover ul, .navigation > ul > li > a:hover ul,
+.navigation ul ul li:hover > ul, .navigation ul ul li a:hover > ul{
+  height: 500px;
+}
+
+.navigation ul ul li{
+  background-color: #233237;
+  width: 250px;
+}
+
+.navigation ul ul li:hover {
+  background-color: #D8C1C1;
+}
+
+.navigation ul ul li:hover a {
+  color: black;
+}
+
+.navigation ul ul li a {
+  display: block;
+  text-decoration: none;
+  margin: 0 12px;
+  padding: 5px 0;
+  color: white;
 }

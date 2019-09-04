@@ -2,9 +2,25 @@
 <html>
   <head>
     <title>Prime Pix Studio</title>
+    <link rel="stylesheet" href="/static/css/material-design-iconic-font.min.css" type="text/css">
     <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+
+
   </head>
   <body>
-    <p>hello</p>
+    <div class="navigation">
+    <ul>
+      {% for category in parent_categories %}
+        <li>
+          <a href="#">{{category.name|upper}} {% if forloop.counter == 1 or forloop.counter == 2 %}<i class="zmdi zmdi-caret-down"></i>{% endif %}</a>
+            <ul>
+              {% for child in category.children.all %}
+                <li><a href="#">{{child.name|upper}}</a></li>
+              {% endfor %}
+            </ul>
+        </li>
+      {% endfor %}
+    </ul>
+    </div>
   </body>
 </html>
