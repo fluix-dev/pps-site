@@ -12,7 +12,7 @@
     <ul>
       {% for category in parent_categories %}
         <li>
-          <a href="#">{{category.name|upper}} {% if forloop.counter == 1 or forloop.counter == 2 %}<i class="zmdi zmdi-caret-down"></i>{% endif %}</a>
+          <a href="#">{{category.name|upper}}<i class="zmdi zmdi-caret-down"></i></a>
             <ul>
               {% for child in category.children.all %}
                 <li><a href="#">{{child.name|upper}}</a></li>
@@ -20,6 +20,15 @@
             </ul>
         </li>
       {% endfor %}
+      <li>
+        <a href="#">LATEST</a>
+      </li>
+      <li>
+        <a href="#">PRE-ORDERS</a>
+      </li>
+      <li>
+        <a href="#">CONTACT</a>
+      </li>
     </ul>
     </div>
   </body>
