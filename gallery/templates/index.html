@@ -4,15 +4,13 @@
     <title>Prime Pix Studio</title>
     <link rel="stylesheet" href="/static/css/material-design-iconic-font.min.css" type="text/css">
     <link rel="stylesheet" href="/static/css/style.css" type="text/css">
-
-
   </head>
   <body>
     <div class="navigation">
     <ul>
       {% for category in parent_categories %}
         <li>
-          <a href="#">{{category.name|upper}}<i class="zmdi zmdi-caret-down"></i></a>
+          <a href="#">{{category.name|upper}} <i class="zmdi zmdi-caret-down"></i></a>
             <ul>
               {% for child in category.children.all %}
                 <li><a href="#">{{child.name|upper}}</a></li>
