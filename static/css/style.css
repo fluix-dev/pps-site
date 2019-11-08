@@ -5,87 +5,73 @@ body {
   font-size: 14px;
 }
 
-.navigation {
-  display:inline-block;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.navigation ul {
-  margin: 0 auto;
-  padding: 0;
-  list-style-type: none;
-  text-align: center;
-}
-
-.navigation img {
+img.nav-img {
   display: block;
   margin: 0 auto;
 }
 
-.navigation > ul > li {
-  display: inline-block;
-
+.navbar-nav{
+    margin: 0 auto;
 }
 
-.navigation > ul > li + li {
-  margin-left: 5px;
+.dropdown:hover {
+  background-color: #233237;
 }
 
-.navigation > ul > li > a {
-  background-color: #1C1F1F;
-  display: block;
-  padding: 8px 14px;
-  text-decoration: none;
-  color: white;
-}
-
-.navigation > ul > li > a:hover {
+.dropdown-menu {
   background-color: #233237;
   color: white;
+  border: 0;
+  border-radius: 0;
+  padding: 0.25rem 0.25rem;
 }
 
-.navigation ul ul {
-  position:absolute;
-
-  height: 0;
-  overflow: hidden;
-  -webkit-transition: height 0.2s ease-in;
-  -moz-transition: height 0.2s ease-in;
-  -o-transition: height 0.2s ease-in;
-  -ms-transition: height 0.2s ease-in;
-  transition: height 0.2s ease-in;
-  text-align: left;
+.dropdown-item {
+  color: white;
+  padding: 0.25rem 0.25rem;
+  font-size: 0.85rem;
 }
 
-.navigation > ul > li:hover ul, .navigation > ul > li > a:hover ul,
-.navigation ul ul li:hover > ul, .navigation ul ul li a:hover > ul{
-  height: 500px;
-}
-
-.navigation ul ul li{
-  background-color: #233237;
-  width: 250px;
-}
-
-.navigation ul ul li:hover {
+.dropdown-item:hover {
   background-color: #D8C1C1;
-}
-
-.navigation ul ul li:hover a {
-  color: black;
-}
-
-.navigation ul ul li a {
-  display: block;
-  text-decoration: none;
-  margin: 0 12px;
-  padding: 5px 0;
   color: white;
 }
 
-/* Written by Kyle Hamilton of candpgeneration.com
-CSS3 transitions - animated dropdown menu without javascript that plays nice in IE7+, FF, CHROME, SAFARI
-The original bare bones version can be found at: http://candpgeneration.com/CSS-dropdowns/CSS3-dropdown.html
-You are free to use this code any way you like.
-Please do not remove this comment. */
+.dropdown .dropdown-menu {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  transition:         all 0.2s  ease;
+  -moz-transition:    all 0.2s  ease;
+  -webkit-transition: all 0.2s  ease;
+  -o-transition:      all 0.2s  ease;
+  -ms-transition:     all 0.2s  ease;
+}
+
+.dropdown:hover .dropdown-menu {
+  visibility: visible;
+  opacity: 1;
+}
+
+.dropdown {
+  display: inline-block;
+}
+
+.show {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.nav-item {
+  max-height:40px;
+}
+.nav-item:hover {
+  max-height:500px;
+}
+.nav-item.show {
+  max-height:500px;
+}
