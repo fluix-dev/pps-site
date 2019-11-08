@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,6 +9,7 @@
   </head>
   <body>
     <div class="navigation">
+      <a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" width=125></img></a>
     <ul>
       {% for category in parent_categories %}
         <li>

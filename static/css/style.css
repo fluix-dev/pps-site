@@ -24,6 +24,11 @@ Please do not remove this comment. */
   text-align: center;
 }
 
+.navigation img {
+  display: block;
+  margin: 0 auto;
+}
+
 .navigation > ul > li {
   display:inline-block;
 
