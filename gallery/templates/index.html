@@ -10,23 +10,16 @@
     <ul>
       {% for category in parent_categories %}
         <li>
-          <a href="#">{{category.name|upper}} <i class="zmdi zmdi-caret-down"></i></a>
+          <a href="#">{{category.name|upper}} {% if category.children.all.count is not 0 %}<i class="zmdi zmdi-caret-down"></i> {% endif %}</a>
+          {% if category.children.all.count is not 0 %}
             <ul>
               {% for child in category.children.all %}
                 <li><a href="{{child.get_url}}">{{child.name|upper}}</a></li>
               {% endfor %}
             </ul>
+          {% endif %}
         </li>
       {% endfor %}
-      <li>
-        <a href="#">{{latest.name|upper}}</a>
-      </li>
-      <li>
-        <a href="#">PRE-ORDERS</a>
-      </li>
-      <li>
-        <a href="#">CONTACT</a>
-      </li>
     </ul>
     </div>
   </body>
