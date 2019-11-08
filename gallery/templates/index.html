@@ -13,7 +13,7 @@
           <a href="#">{{category.name|upper}} <i class="zmdi zmdi-caret-down"></i></a>
             <ul>
               {% for child in category.children.all %}
-                <li><a href="#">{{child.name|upper}}</a></li>
+                <li><a href="{{child.get_url}}">{{child.name|upper}}</a></li>
               {% endfor %}
             </ul>
         </li>
