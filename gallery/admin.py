@@ -1,5 +1,5 @@
 from django.contrib import admin
-from adminsortable2.admin import SortableInlineAdminMixin
+from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from .models import *
 
 class CategoryInLine(SortableInlineAdminMixin, admin.TabularInline):
@@ -8,7 +8,7 @@ class CategoryInLine(SortableInlineAdminMixin, admin.TabularInline):
     extra = 0
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
     #def get_model_perms(self, request): return {}
 
     list_display = ('name', 'parent')
