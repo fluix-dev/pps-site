@@ -4,6 +4,7 @@ from .models import *
 # Create your views here.
 def home(request):
     context = {
-        'parent_categories': Category.objects.filter(parent=None)
+        'parent_categories': Category.objects.filter(parent=None),
+        'latest': Category.objects.all().exclude(parent=None)[0]
     }
     return render(request, 'index.html', context)
