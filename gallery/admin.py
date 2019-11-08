@@ -12,6 +12,6 @@ class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
     #def get_model_perms(self, request): return {}
 
     list_display = ('name', 'parent')
-    inlines = (
+    inlines = [
         CategoryInLine,
-    )
+    ]
