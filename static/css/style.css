@@ -4,22 +4,16 @@ body {
   font-family: 'Montserrat',sans-serif;
   font-size: 14px;
 }
-/* Written by Kyle Hamilton of candpgeneration.com
-CSS3 transitions - animated dropdown menu without javascript that plays nice in IE7+, FF, CHROME, SAFARI
-The original bare bones version can be found at: http://candpgeneration.com/CSS-dropdowns/CSS3-dropdown.html
-You are free to use this code any way you like.
-Please do not remove this comment. */
 
-/* the main menu */
 .navigation {
   display:inline-block;
   width: 100%;
   margin: 0 auto;
 }
 
-.navigation ul{
+.navigation ul {
   margin: 0 auto;
-  padding:0; /* gets rid of any inherited margins and padding */
+  padding: 0;
   list-style-type: none;
   text-align: center;
 }
@@ -30,12 +24,12 @@ Please do not remove this comment. */
 }
 
 .navigation > ul > li {
-  display:inline-block;
+  display: inline-block;
 
 }
 
-.navigation > ul > li + li{
-  margin-left:5px;
+.navigation > ul > li + li {
+  margin-left: 5px;
 }
 
 .navigation > ul > li > a {
@@ -46,12 +40,12 @@ Please do not remove this comment. */
   color: white;
 }
 
-.navigation > ul > li > a:hover{
+.navigation > ul > li > a:hover {
   background-color: #233237;
   color: white;
 }
 
-.navigation ul ul{
+.navigation ul ul {
   position:absolute;
 
   height: 0;
@@ -89,3 +83,9 @@ Please do not remove this comment. */
   padding: 5px 0;
   color: white;
 }
+
+/* Written by Kyle Hamilton of candpgeneration.com
+CSS3 transitions - animated dropdown menu without javascript that plays nice in IE7+, FF, CHROME, SAFARI
+The original bare bones version can be found at: http://candpgeneration.com/CSS-dropdowns/CSS3-dropdown.html
+You are free to use this code any way you like.
+Please do not remove this comment. */
