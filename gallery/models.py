@@ -19,10 +19,12 @@ class Category(models.Model):
     sort_order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     @property
-    def get_url(self, html=False):
+    def get_url(self):
         if self.link_override is not None:
             return self.link_override
-        return reverse('category', args=(self.category_id,))
+        if self.category_id is not None:
+            return reverse('category', args=(self.category_id,))
+        return None
 
     @property
     def get_url_html(self):
