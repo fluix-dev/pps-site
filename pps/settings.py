@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'gallery',
 
-    'adminsortable',
+    'adminsortable2',
 ]
 
 MIDDLEWARE = [

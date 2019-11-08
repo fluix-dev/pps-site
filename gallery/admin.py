@@ -1,15 +1,17 @@
 from django.contrib import admin
-from adminsortable.admin import SortableStackedInline, NonSortableParentAdmin
+from adminsortable2.admin import SortableInlineAdminMixin
 from .models import *
 
-class CategoryInLine(SortableStackedInline):
+class CategoryInLine(SortableInlineAdminMixin, admin.TabularInline):
+    list_display = ('sort_order', 'name', 'parent')
     model = Category
     extra = 0
 
-class CategoryAdmin(NonSortableParentAdmin):
-    inlines = [
-        CategoryInLine,
-    ]
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    #def get_model_perms(self, request): return {}
 
-# Register your models here.
-admin.site.register(Category, CategoryAdmin)
+    list_display = ('name', 'parent')
+    inlines = (
+        CategoryInLine,
+    )

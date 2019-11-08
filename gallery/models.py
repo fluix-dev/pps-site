@@ -1,19 +1,16 @@
 from django.db import models
-from adminsortable.models import SortableMixin
-from adminsortable.fields import SortableForeignKey
 
 # Create your models here.
-class Category(SortableMixin):
+class Category(models.Model):
     name = models.CharField(max_length=100)
-    #parent = models.ForeignKey('Category', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
-    parent = SortableForeignKey('Category', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
+    parent = models.ForeignKey('Category', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
-        ordering = ['order']
+        ordering = ['sort_order']
 
-    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+    sort_order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     def __str__(self):
         return self.name
