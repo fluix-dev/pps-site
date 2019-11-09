@@ -27,7 +27,7 @@
       <ul class="navbar-nav mr-auto">
         {% for category in parent_categories %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-white" href="{% if category.children.all.count is 0 %}{{category.get_url}}{% endif %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{category.name|upper}} {% if category.children.all.count is not 0 %}<i class="zmdi zmdi-caret-down"></i> {% endif %}</a>
+          <a class="nav-link dropdown-toggle text-white" href="{% if category.children.all.count is 0 %}{{category.get_url}}{% endif %}" {% if category.children.all.count is not 0 %} id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" {% endif %}>{{category.name|upper}} {% if category.children.all.count is not 0 %}<i class="zmdi zmdi-caret-down"></i> {% endif %}</a>
           {% if category.children.all.count is not 0 %}
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             {% for child in category.children.all %}
@@ -41,7 +41,7 @@
     </div>
   </nav>
   {% endblock %}
-  
+
   {% block body %}
   {% endblock %}
 </body>
