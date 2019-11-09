@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<div id="nanogallery2" data-nanogallery2='{
+    "thumbnailHeight": 150,
+    "thumbnailWidth": "auto",
+    "thumbnailBorderHorizontal": 0,
+    "thumbnailBorderVertical": 0,
+    "thumbnailGutterWidth": 4,
+    "thumbnailGutterHeight": 4,
+    "thumbnailLabel": {"display": false},
+    "itemsBaseURL": "{{base_url}}",
+    "viewerToolbar": {"display": false},
+    "viewerTools" : {"topRight": "zoomButton, downloadButton, closeButton"}
+
+  }'>
+  <!-- ### gallery content ### -->
+  {% for image in images %}
+    <a href="{{image}}" data-ngthumb="IMG_0003LS.jpg"></a>
+  {% endfor %}
+</div>
+{% endblock %}
