@@ -1,2 +1,2 @@
 # pps-site
-primeoixstudio.com website
+primepixstudio.com website
