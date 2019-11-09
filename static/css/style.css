@@ -82,3 +82,27 @@ img.nav-img {
   margin: 0 auto;
   width: 200px;
 }
+
+.caption {
+  position: absolute;
+}
+
+.galleries {
+  margin: 10px 10px;
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.centered {
+  background-color: rgba(0,0,0,.5);
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  min-width: 100%;
+  transform: translate(-50%, -50%);
+}
+
+.img {
+  width: 100%;
+}
