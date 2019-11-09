@@ -1,6 +1,8 @@
 import os
-from os.path import isfile, join
+import sys
+import PIL
 
+from os.path import isfile, join
 from django.shortcuts import render
 from .models import *
 
@@ -25,7 +27,21 @@ def category(request, category_id):
 def gallery(request, gallery_id):
     gallery = Gallery.objects.get(gallery_id=gallery_id)
     root_url = os.path.join(settings.MEDIA_ROOT, str(gallery.category.category_id), str(gallery_id))
+    thumbnail_url = os.path.join(root_url, 'thumbnails')
     images = [f for f in os.listdir(root_url) if isfile(join(root_url, f))]
+    thumbnails = [f for f in os.listdir(thumbnail_url) if isfile(join(thumbnail_url, f))]
+
+    # Generate thumbnails
+    if (len(images) != len(thumbnails)):
+        maxsize = (256, 256)
+        for infile in images:
+            outfile = os.path.join(thumbnail_url, infile)
+            try:
+                im = PIL.Image.open(os.path.join(root_url, infile))
+                im.thumbnail(maxsize, PIL.Image.ANTIALIAS)
+                im.save(outfile, "JPEG")
+            except IOError:
+                print('Failed creating a thumbnail.')
 
     context = {
         'parent_categories': Category.objects.filter(parent=None),

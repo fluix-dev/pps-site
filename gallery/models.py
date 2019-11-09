@@ -61,6 +61,6 @@ class Gallery(models.Model):
 
 @receiver(post_save, sender=Gallery)
 def create_image_path(sender, instance, **kwargs):
-    print(instance.image_path)
-    if not os.path.exists(instance.image_path):
-        os.makedirs(instance.image_path)
+    thumbnail_path = os.path.join(instance.image_path, 'thumbnails')
+    if not os.path.exists(thumbnail_path):
+        os.makedirs(thumbnail_path)

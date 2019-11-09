@@ -15,9 +15,9 @@
     "viewerTools" : {"topRight": "zoomButton, downloadButton, closeButton"}
 
   }'>
-  <!-- ### gallery content ### -->
+
   {% for image in images %}
-    <a href="{{image}}" data-ngthumb="IMG_0003LS.jpg"></a>
+    <a href="{{image}}" data-ngthumb="thumbnails/{{image}}"></a>
   {% endfor %}
 </div>
 {% endblock %}
