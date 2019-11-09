@@ -1,6 +1,10 @@
+import os
 import uuid
 
+from django.conf import settings
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.html import format_html
 
@@ -32,3 +36,31 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+class Gallery(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.ForeignKey('Category', related_name='galleries', on_delete=models.CASCADE)
+    gallery_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    thumbnail = models.ImageField(upload_to='gallery_thumbnails', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Gallery'
+        verbose_name_plural = 'Galleries'
+        ordering = ['sort_order']
+
+    sort_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    @property
+    def image_path(self):
+        if self.gallery_id is not None:
+            return os.path.join(settings.MEDIA_ROOT, str(self.category.category_id), str(self.gallery_id))
+        return None
+
+    def __str__(self):
+        return self.name
+
+@receiver(post_save, sender=Gallery)
+def create_image_path(sender, instance, **kwargs):
+    print(instance.image_path)
+    if not os.path.exists(instance.image_path):
+        os.makedirs(instance.image_path)

@@ -10,6 +10,13 @@ class CategoryInline(SortableInlineAdminMixin, admin.TabularInline):
     readonly_fields = ('get_url_html',)
     extra = 0
 
+
+class GalleryInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = Gallery
+    fields = ('name','thumbnail','image_path')
+    readonly_fields = ('image_path',)
+    extra = 0
+
 @admin.register(Category)
 class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
     def get_queryset(self, request):
@@ -29,4 +36,5 @@ class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
 
     inlines = [
         CategoryInline,
+        GalleryInline
     ]
