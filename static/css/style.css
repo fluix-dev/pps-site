@@ -103,6 +103,11 @@ img.nav-img {
   transform: translate(-50%, -50%);
 }
 
-.img {
-  width: 100%;
+
+.thumb {
+    display: inline-block;
+    width: 250px;
+    height: 250px;
+    background-position: center center;
+    background-size: cover;
 }
