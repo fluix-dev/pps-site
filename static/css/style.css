@@ -69,9 +69,16 @@ img.nav-img {
 .nav-item {
   max-height:40px;
 }
+
 .nav-item:hover {
   max-height:500px;
 }
+
 .nav-item.show {
   max-height:500px;
+}
+
+.navbar-toggler {
+  margin: 0 auto;
+  width: 200px;
 }
