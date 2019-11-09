@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+{% block content %}
+<html>
+<head>
+  {% block head %}
+  <title>Prime Pix Studio</title>
+  <link rel="stylesheet" href="{% static '/css/material-design-iconic-font.min.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static '/css/style.css' %}" type="text/css">
+
+  <script src="{% static '/js/jquery-3.4.1.min.js' %}"></script>
+  <script src="{% static '/js/bootstrap.bundle.min.js' %}"></script>
+  {% endblock %}
+</head>
+<body>
+  <a href="{% url 'index' %}"><img class="nav-img" src="{% static 'img/logo.png' %}" width=125></img></a>
+
+  {% block nav %}
+  <nav class="navbar navbar-expand-md navbar-dark bg-gray">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        {% for category in parent_categories %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="{% if category.children.all.count is 0 %}{{category.get_url}}{% endif %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{category.name|upper}} {% if category.children.all.count is not 0 %}<i class="zmdi zmdi-caret-down"></i> {% endif %}</a>
+          {% if category.children.all.count is not 0 %}
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% for child in category.children.all %}
+            <a class="dropdown-item" href="{{child.get_url}}">{{child.name|upper}}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
+  {% endblock %}
+  
+  {% block body %}
+  {% endblock %}
+</body>
+</html>
+{% endblock %}
