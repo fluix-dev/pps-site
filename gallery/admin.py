@@ -2,6 +2,8 @@ from django.contrib import admin
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from .models import *
 
+import uuid
+
 class CategoryInLine(SortableInlineAdminMixin, admin.TabularInline):
     model = Category
     fields = ('name','link_override','get_url_html')
@@ -12,9 +14,16 @@ class CategoryInLine(SortableInlineAdminMixin, admin.TabularInline):
 class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(CategoryAdmin, self).get_queryset(request)
-        return qs.filter(parent=None)
 
-    list_display = ('name',)
+        #Show only root directorie
+        uuid_string = str(request).split("/")[4]
+        if (uuid_string == "'>" and not request.GET.get('all') == 'true'):
+            return qs.filter(parent=None)
+
+        #Show all
+        return qs
+
+    list_display = ('name','parent')
     fields = (('name','parent'),'link_override','get_url_html')
     readonly_fields = ('get_url_html',)
 
