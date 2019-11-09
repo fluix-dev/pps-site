@@ -4,7 +4,7 @@ from .models import *
 
 import uuid
 
-class CategoryInLine(SortableInlineAdminMixin, admin.TabularInline):
+class CategoryInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Category
     fields = ('name','link_override','get_url_html')
     readonly_fields = ('get_url_html',)
@@ -28,5 +28,5 @@ class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
     readonly_fields = ('get_url_html',)
 
     inlines = [
-        CategoryInLine,
+        CategoryInline,
     ]
