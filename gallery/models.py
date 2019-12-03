@@ -42,6 +42,7 @@ class Gallery(models.Model):
     category = models.ForeignKey('Category', related_name='galleries', on_delete=models.CASCADE)
     gallery_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     thumbnail = models.ImageField(upload_to='gallery_thumbnails', blank=True, null=True)
+    locked = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'Gallery'
