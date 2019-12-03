@@ -16,7 +16,7 @@
     "thumbnailLabel": {"display": false},
     "itemsBaseURL": "{{base_url}}",
     "viewerToolbar": {"display": false},
-    "viewerTools" : {"topRight": "zoomButton, downloadButton, closeButton"}
+    "viewerTools" : {"topRight": "zoomButton, {% if not gallery.locked %}downloadButton, {% endif %}closeButton"}
 
   }'>
 

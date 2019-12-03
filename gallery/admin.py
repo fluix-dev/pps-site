@@ -13,7 +13,7 @@ class CategoryInline(SortableInlineAdminMixin, admin.TabularInline):
 
 class GalleryInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Gallery
-    fields = ('name','thumbnail','image_path')
+    fields = ('name','thumbnail','image_path','locked')
     readonly_fields = ('image_path',)
     extra = 0
 
