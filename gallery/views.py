@@ -58,18 +58,26 @@ def gallery(request, gallery_id):
     }
     return render(request, 'gallery.html', context)
 
-def serve_protected(request, category_id, gallery_id, file):
-    # Determine path to requested file
-    if 'thumbnail' in str(request):
-        valid_image = os.path.join(settings.MEDIA_ROOT, str(category_id), str(gallery_id), 'thumbnails', str(file))
-    else:
-        valid_image = os.path.join(settings.MEDIA_ROOT, str(category_id), str(gallery_id), str(file))
 
-    # Return the image
+# Serve full gallery thumbnail
+def serve_thumbnail(request, file):
+    thumbnail = os.path.join(settings.MEDIA_ROOT, 'gallery_thumbnails', str(file))
+    return serve_protected(request, thumbnail)
+
+# Serve full gallery image thumbnails
+def serve_gallery_thumbnail(request, category_id, gallery_id, file):
+    thumbnail = os.path.join(settings.MEDIA_ROOT, str(category_id), str(gallery_id), 'thumbnails', str(file))
+    return serve_protected(request, thumbnail)
+
+# Serve full gallery images
+def serve_gallery_image(request, category_id, gallery_id, file):
+    image = os.path.join(settings.MEDIA_ROOT, str(category_id), str(gallery_id), str(file))
+    return serve_protected(request, image)
+
+# Serve requested file
+def serve_protected(request, file):
     try:
-        if ('0010LS' in str(request)):
-            raise Http404()
-        with open(valid_image, "rb") as f:
+        with open(file, "rb") as f:
             return HttpResponse(f.read(), content_type="image/jpeg")
     except IOError:
         # Empty image
