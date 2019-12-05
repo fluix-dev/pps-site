@@ -61,7 +61,11 @@ class Gallery(models.Model):
         return self.name
 
 @receiver(post_save, sender=Gallery)
-def create_image_path(sender, instance, **kwargs):
+def create_image_paths(sender, instance, **kwargs):
     thumbnail_path = os.path.join(instance.image_path, 'thumbnails')
     if not os.path.exists(thumbnail_path):
         os.makedirs(thumbnail_path)
+
+    watermark_path = os.path.join(instance.image_path, 'watermarked')
+    if not os.path.exists(watermark_path):
+        os.makedirs(watermark_path)

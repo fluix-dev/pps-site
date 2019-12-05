@@ -1,8 +1,8 @@
 import os
 import sys
-import PIL
+import math
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 from os.path import isfile, join
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
@@ -31,10 +31,12 @@ def gallery(request, gallery_id):
     category = gallery.category
     root_url = os.path.join(settings.MEDIA_ROOT, str(gallery.category.category_id), str(gallery_id))
     thumbnail_url = os.path.join(root_url, 'thumbnails')
+    watermark_url = os.path.join(root_url, 'watermarked')
 
     # Get list of images and thumbnails
     images = [f for f in os.listdir(root_url) if isfile(join(root_url, f))]
     thumbnails = [f for f in os.listdir(thumbnail_url) if isfile(join(thumbnail_url, f))]
+    watermarked = [f for f in os.listdir(watermark_url) if isfile(join(watermark_url, f))]
 
     # Generate thumbnails
     if (len(images) != len(thumbnails)):
@@ -48,6 +50,31 @@ def gallery(request, gallery_id):
             except IOError:
                 print('Failed creating a thumbnail.')
 
+    # Generate watermakred images
+    if (len(images) != len(watermarked)):
+        for infile in images:
+            outfile = os.path.join(watermark_url, infile)
+            try:
+                # Open images
+                im = Image.open(os.path.join(root_url, infile))
+                watermark = Image.open(os.path.join(settings.STATIC_ROOT, 'img', 'watermark.png'))
+
+                # Calculate dimensions
+                maxwidth, maxheight = im.size
+                width, height = watermark.size
+                ratio = min(maxwidth/width, maxheight/height)
+                watermark = watermark.resize((math.floor(width*ratio), math.floor(height*ratio)))
+                width, height = watermark.size
+                watermark_pos = (math.floor(maxwidth/2 - width/2),math.floor(maxheight/2 - height/2))
+
+                # Create final image
+                transparent = Image.new('RGBA', im.size, (0,0,0,0))
+                transparent.paste(im, (0,0))
+                transparent.paste(watermark, watermark_pos, mask=watermark)
+                transparent.convert('RGB').save(outfile, "JPEG")
+            except IOError:
+                print('Failed creating a watermark.')
+
     context = {
         'parent_categories': Category.objects.filter(parent=None),
         'latest': Category.objects.all().exclude(parent=None)[0],
@@ -57,7 +84,6 @@ def gallery(request, gallery_id):
         'gallery': gallery
     }
     return render(request, 'gallery.html', context)
-
 
 # Serve full gallery thumbnail
 def serve_thumbnail(request, file):
