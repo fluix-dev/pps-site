@@ -4,9 +4,9 @@ import PIL
 
 from PIL import Image
 from os.path import isfile, join
+from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from .models import *
-from django.http import HttpResponse, Http404
 
 # Create your views here.
 def home(request):
@@ -71,7 +71,10 @@ def serve_gallery_thumbnail(request, category_id, gallery_id, file):
 
 # Serve full gallery images
 def serve_gallery_image(request, category_id, gallery_id, file):
-    image = os.path.join(settings.MEDIA_ROOT, str(category_id), str(gallery_id), str(file))
+    if not Gallery.objects.all().get(gallery_id=gallery_id).locked:
+        image = os.path.join(settings.MEDIA_ROOT, str(category_id), str(gallery_id), str(file))
+    else:
+        image = os.path.join(settings.MEDIA_ROOT, str(category_id), str(gallery_id), 'watermarked', str(file))
     return serve_protected(request, image)
 
 # Serve requested file
