@@ -9,28 +9,31 @@ from django.shortcuts import render
 from .models import *
 
 # Create your views here.
-def home(request):
+def get_navbar_context():
     context = {
         'parent_categories': Category.objects.filter(parent=None),
-        'latest': Category.objects.all().exclude(parent=None)[0]
     }
-    return render(request, 'index.html', context)
+
+    # Get latest category
+    try:
+        context += {'latest': Category.objects.all().exclude(parent=None)[0]}
+    except:
+        pass
+    return context
+
+def home(request):
+    return render(request, 'index.html', get_navbar_context())
 
 def contact(request):
-    context = {
-        'parent_categories': Category.objects.filter(parent=None),
-        'latest': Category.objects.all().exclude(parent=None)[0]
-    }
-    return render(request, 'contact.html', context)
+    return render(request, 'contact.html', get_navbar_context())
 
 def category(request, category_id):
     category = Category.objects.get(category_id=category_id)
     context = {
-        'parent_categories': Category.objects.filter(parent=None),
-        'latest': Category.objects.all().exclude(parent=None)[0],
         'category': category,
         'galleries': category.galleries.all()
     }
+    context += get_navbar_context()
     return render(request, 'category.html', context)
 
 def gallery(request, gallery_id):
@@ -83,13 +86,12 @@ def gallery(request, gallery_id):
                 print('Failed creating a watermark.')
 
     context = {
-        'parent_categories': Category.objects.filter(parent=None),
-        'latest': Category.objects.all().exclude(parent=None)[0],
         'base_url': settings.MEDIA_URL + str(gallery.category.category_id) + '/' + str(gallery_id) + '/',
         'images': images,
         'category': category,
         'gallery': gallery
     }
+    context += get_navbar_context()
     return render(request, 'gallery.html', context)
 
 # Serve full gallery thumbnail
