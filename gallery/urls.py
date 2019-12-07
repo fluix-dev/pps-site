@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='index'),
+    path('contact/', views.contact, name='contact'),
     path('c/<uuid:category_id>', views.category, name='category'),
     path('g/<uuid:gallery_id>', views.gallery, name='gallery'),
     path('media/<uuid:category_id>/<uuid:gallery_id>/<file>', views.serve_gallery_image, name='serve_gallery_image'),

@@ -16,6 +16,13 @@ def home(request):
     }
     return render(request, 'index.html', context)
 
+def contact(request):
+    context = {
+        'parent_categories': Category.objects.filter(parent=None),
+        'latest': Category.objects.all().exclude(parent=None)[0]
+    }
+    return render(request, 'contact.html', context)
+
 def category(request, category_id):
     category = Category.objects.get(category_id=category_id)
     context = {
