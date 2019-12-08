@@ -136,7 +136,6 @@ def serve_gallery_image(request, category_id, gallery_id, file):
 def serve_protected(request, file):
     print("Getting file: " + str(file))
     response = HttpResponse()
-    response["Content-Disposition"] = "attachment; filename={0}".format(
-            os.path.basename(file))
-    response['X-Accel-Redirect'] = "/media/{0}".format(str(file))
+    response['Content-Type'] = ''
+    response['X-Accel-Redirect'] = '/media/' + str(file)
     return response
