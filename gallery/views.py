@@ -33,7 +33,7 @@ def category(request, category_id):
         'category': category,
         'galleries': category.galleries.all()
     }
-    context += get_navbar_context()
+    context.update(get_navbar_context())
     return render(request, 'category.html', context)
 
 def gallery(request, gallery_id):
@@ -91,7 +91,7 @@ def gallery(request, gallery_id):
         'category': category,
         'gallery': gallery
     }
-    context += get_navbar_context()
+    context.update(get_navbar_context())
     return render(request, 'gallery.html', context)
 
 # Serve full gallery thumbnail
