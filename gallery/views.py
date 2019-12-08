@@ -7,6 +7,7 @@ from os.path import isfile, join
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from .models import *
+from threading import Thread
 
 # Create your views here.
 def get_navbar_context():
@@ -56,28 +57,8 @@ def gallery(request, gallery_id):
 
     # Generate watermakred images
     if (len(images) != len(watermarked)):
-        for infile in images:
-            outfile = os.path.join(watermark_url, infile)
-            try:
-                # Open images
-                im = Image.open(os.path.join(root_url, infile))
-                watermark = Image.open(os.path.join(settings.STATIC_ROOT, 'img', 'watermark.png'))
-
-                # Calculate dimensions
-                maxwidth, maxheight = im.size
-                width, height = watermark.size
-                ratio = min(maxwidth/width, maxheight/height)
-                watermark = watermark.resize((math.floor(width*ratio), math.floor(height*ratio)))
-                width, height = watermark.size
-                watermark_pos = (math.floor(maxwidth/2 - width/2),math.floor(maxheight/2 - height/2))
-
-                # Create final image
-                transparent = Image.new('RGBA', im.size, (0,0,0,0))
-                transparent.paste(im, (0,0))
-                transparent.paste(watermark, watermark_pos, mask=watermark)
-                transparent.convert('RGB').save(outfile, "JPEG")
-            except IOError:
-                print('Failed creating a watermark.')
+        thread = Thread(target = create_watermarks, args = (images, root_url, watermark_url))
+        thread.start()
 
     context = {
         'base_url': settings.MEDIA_URL + str(gallery.category.category_id) + '/' + str(gallery_id) + '/',
@@ -87,6 +68,31 @@ def gallery(request, gallery_id):
     }
     context.update(get_navbar_context())
     return render(request, 'gallery.html', context)
+
+# Create watermarks
+def create_watermarks(images, root_url, watermark_url):
+    for infile in images:
+        outfile = os.path.join(watermark_url, infile)
+        try:
+            # Open images
+            im = Image.open(os.path.join(root_url, infile))
+            watermark = Image.open(os.path.join(settings.STATIC_ROOT, 'img', 'watermark.png'))
+
+            # Calculate dimensions
+            maxwidth, maxheight = im.size
+            width, height = watermark.size
+            ratio = min(maxwidth/width, maxheight/height)
+            watermark = watermark.resize((math.floor(width*ratio), math.floor(height*ratio)))
+            width, height = watermark.size
+            watermark_pos = (math.floor(maxwidth/2 - width/2),math.floor(maxheight/2 - height/2))
+
+            # Create final image
+            transparent = Image.new('RGBA', im.size, (0,0,0,0))
+            transparent.paste(im, (0,0))
+            transparent.paste(watermark, watermark_pos, mask=watermark)
+            transparent.convert('RGB').save(outfile, "JPEG")
+        except IOError:
+            print('Failed creating a watermark.')
 
 # Serve full gallery thumbnail
 def serve_thumbnail(request, file):
