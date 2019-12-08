@@ -1,12 +1,12 @@
+import math
 import os
 import sys
-import math
 
-from PIL import Image, ImageDraw, ImageFont
-from os.path import isfile, join
+from .models import *
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
-from .models import *
+from os.path import isfile, join
+from PIL import Image, ImageDraw, ImageFont
 from threading import Thread
 
 # Create your views here.
