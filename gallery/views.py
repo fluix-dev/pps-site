@@ -48,8 +48,8 @@ def gallery(request, gallery_id):
         for infile in images:
             outfile = os.path.join(thumbnail_url, infile)
             try:
-                im = PIL.Image.open(os.path.join(root_url, infile))
-                im.thumbnail(maxsize, PIL.Image.ANTIALIAS)
+                im = Image.open(os.path.join(root_url, infile))
+                im.thumbnail(maxsize, Image.ANTIALIAS)
                 im.save(outfile, "JPEG")
             except IOError:
                 print('Failed creating a thumbnail.')
