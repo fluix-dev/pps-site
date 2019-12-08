@@ -63,7 +63,7 @@ class Gallery(models.Model):
     @property
     def image_path(self):
         if self.gallery_id is not None:
-            return os.path.join(settings.MEDIA_ROOT, str(self.category.category_id), str(self.gallery_id))
+            return os.path.join(settings.GALLERY_ROOT, str(self.category.category_id), str(self.gallery_id))
         return None
 
     def __str__(self):
