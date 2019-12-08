@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 {% block content %}
 <html>
+
 <head>
   {% block head %}
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
@@ -18,13 +19,13 @@
   <script src="{% static '/js/nanogallery2.min.js' %}"></script>
   {% endblock %}
 </head>
+
 <body>
   <a href="{% url 'index' %}"><img class="nav-img" src="{% static 'img/logo.png' %}" width=125></a>
 
   {% block nav %}
   <nav class="navbar navbar-expand-md navbar-dark bg-gray">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -32,10 +33,9 @@
       <ul class="navbar-nav mr-auto">
         {% for category in parent_categories %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-white" href="{% if category.children.all.count is 0 %}{{category.get_url}}{% endif %}"
-             {% if category.children.all.count is not 0 %} id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-             aria-expanded="false" {% endif %}>{{category.name|upper}} {% if category.children.all.count is not 0 %}
-             <i class="zmdi zmdi-caret-down"></i> {% endif %}
+          <a class="nav-link dropdown-toggle text-white" href="{% if category.children.all.count is 0 %}{{category.get_url}}{% endif %}" {% if category.children.all.count is not 0 %} id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" {% endif %}>{{category.name|upper}} {% if category.children.all.count is not 0 %}
+            <i class="zmdi zmdi-caret-down"></i> {% endif %}
           </a>
           {% if category.children.all.count is not 0 %}
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -54,5 +54,6 @@
   {% block body %}
   {% endblock %}
 </body>
+
 </html>
 {% endblock %}
