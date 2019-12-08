@@ -110,13 +110,13 @@ def create_watermarks(images, root_url, watermark_url):
 # Serve full gallery thumbnail
 def serve_thumbnail(request, file):
     thumbnail = os.path.join(
-        settings.MEDIA_ROOT, 'gallery_thumbnails', str(file))
+        'gallery_thumbnails', str(file))
     return serve_protected(request, thumbnail)
 
 
 # Serve full gallery image thumbnails
 def serve_gallery_thumbnail(request, category_id, gallery_id, file):
-    thumbnail = os.path.join(settings.MEDIA_ROOT, str(
+    thumbnail = os.path.join(str(
         category_id), str(gallery_id), 'thumbnails', str(file))
     return serve_protected(request, thumbnail)
 
@@ -124,22 +124,18 @@ def serve_gallery_thumbnail(request, category_id, gallery_id, file):
 # Serve full gallery images
 def serve_gallery_image(request, category_id, gallery_id, file):
     if not Gallery.objects.all().get(gallery_id=gallery_id).locked:
-        image = os.path.join(settings.MEDIA_ROOT, str(
+        image = os.path.join(str(
             category_id), str(gallery_id), str(file))
     else:
-        image = os.path.join(settings.MEDIA_ROOT, str(
+        image = os.path.join(str(
             category_id), str(gallery_id), 'watermarked', str(file))
     return serve_protected(request, image)
 
 
 # Serve requested file
 def serve_protected(request, file):
-    try:
-        with open(file, "rb") as f:
-            return HttpResponse(f.read(), content_type="image/jpeg")
-    except IOError:
-        # Empty image
-        red = Image.new('RGB', (1, 1), (0, 0, 0, 0))
-        response = HttpResponse(content_type="image/jpeg")
-        red.save(response, "JPEG")
-        return response
+    response = HttpResponse()
+    response["Content-Disposition"] = "attachment; filename={0}".format(
+            file)
+    response['X-Accel-Redirect'] = "/media/{0}".format(file)
+    return response
