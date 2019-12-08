@@ -8,19 +8,23 @@ from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.html import format_html
 
-# Create your models here.
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    parent = models.ForeignKey('Category', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
-    category_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    link_override = models.CharField(max_length=200, default=None, blank=True, null=True)
+    parent = models.ForeignKey(
+        'Category', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
+    category_id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
+    link_override = models.CharField(
+        max_length=200, default=None, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
         ordering = ['sort_order']
 
-    sort_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+    sort_order = models.PositiveIntegerField(
+        default=0, blank=False, null=False)
 
     @property
     def get_url(self):
@@ -37,11 +41,15 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class Gallery(models.Model):
     name = models.CharField(max_length=100)
-    category = models.ForeignKey('Category', related_name='galleries', on_delete=models.CASCADE)
-    gallery_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    thumbnail = models.ImageField(upload_to='gallery_thumbnails', blank=True, null=True)
+    category = models.ForeignKey(
+        'Category', related_name='galleries', on_delete=models.CASCADE)
+    gallery_id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
+    thumbnail = models.ImageField(
+        upload_to='gallery_thumbnails', blank=True, null=True)
     locked = models.BooleanField(default=True)
 
     class Meta:
@@ -49,7 +57,8 @@ class Gallery(models.Model):
         verbose_name_plural = 'Galleries'
         ordering = ['sort_order']
 
-    sort_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+    sort_order = models.PositiveIntegerField(
+        default=0, blank=False, null=False)
 
     @property
     def image_path(self):
@@ -59,6 +68,7 @@ class Gallery(models.Model):
 
     def __str__(self):
         return self.name
+
 
 @receiver(post_save, sender=Gallery)
 def create_image_paths(sender, instance, **kwargs):
