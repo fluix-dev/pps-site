@@ -1,8 +1,8 @@
-from django.contrib import admin
-from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
-from .models import *
-
 import uuid
+
+from .models import *
+from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
+from django.contrib import admin
 
 class CategoryInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Category
