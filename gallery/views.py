@@ -13,12 +13,6 @@ def get_navbar_context():
     context = {
         'parent_categories': Category.objects.filter(parent=None),
     }
-
-    # Get latest category
-    try:
-        context += {'latest': Category.objects.all().exclude(parent=None)[0]}
-    except:
-        pass
     return context
 
 def home(request):
