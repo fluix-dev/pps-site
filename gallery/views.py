@@ -1,6 +1,7 @@
 import math
 import os
 import sys
+import logging
 
 from .models import *
 from django.http import HttpResponse, Http404
@@ -9,6 +10,7 @@ from os.path import isfile, join
 from PIL import Image, ImageDraw, ImageFont
 from threading import Thread
 
+logger = logging.getLogger(__name__)
 
 def get_navbar_context():
     context = {
