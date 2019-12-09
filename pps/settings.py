@@ -153,8 +153,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-GALLERY_URL = '/media/'
-GALLERY_ROOT = os.path.join(BASE_DIR, 'media/')
+GALLERY_URL = '/protected/'
+GALLERY_ROOT = os.path.join(BASE_DIR, 'protected/')
 
 try:
     from local_settings import *

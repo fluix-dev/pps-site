@@ -12,6 +12,7 @@ from threading import Thread
 
 logger = logging.getLogger(__name__)
 
+
 def get_navbar_context():
     context = {
         'parent_categories': Category.objects.filter(parent=None),
@@ -71,7 +72,7 @@ def gallery(request, gallery_id):
         thread.start()
 
     context = {
-        'base_url': settings.GALLERY_URL + str(gallery.category.category_id) + '/' + str(gallery_id) + '/',
+        'base_url': '/media/' + str(gallery.category.category_id) + '/' + str(gallery_id) + '/',
         'images': images,
         'category': category,
         'gallery': gallery
@@ -136,8 +137,10 @@ def serve_gallery_image(request, category_id, gallery_id, file):
 # Serve requested file
 def serve_protected(request, file):
     response = HttpResponse()
-    response['X-Accel-Redirect'] = '/media/' + str(file)
-    response['Content-Disposition'] = 'attachment; filename="{}"'.format(os.path.basename(file))
+    response['Content-Type'] = ''
+    response['X-Accel-Redirect'] = '/protected/media/' + str(file)
+    response['Content-Disposition'] = 'attachment; filename="{}"'.format(
+        os.path.basename(file))
     logger.debug(file)
     logger.debug(response)
     return response
