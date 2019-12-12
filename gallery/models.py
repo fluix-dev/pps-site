@@ -36,7 +36,13 @@ class Category(models.Model):
 
     @property
     def get_url_html(self):
-        return format_html("<a href='{url}'>{url}</a>", url=self.get_url)
+        return format_html("<a href='{url}'>View Site</a>", url=self.get_url)
+
+    @property
+    def get_admin_url(self):
+        info = (self._meta.app_label, self._meta.model_name)
+        admin_url = reverse('admin:%s_%s_change' % info, args=(self.pk,))
+        return format_html("<a href='{url}'>View Admin</a>", url=admin_url)
 
     def __str__(self):
         return self.name
