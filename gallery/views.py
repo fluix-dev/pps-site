@@ -28,7 +28,8 @@ def home(request):
 def contact(request):
     context = {
         'form': ContactForm()
-    }.update(get_navbar_context())
+    }
+    context.update(get_navbar_context())
     return render(request, 'contact.html', context)
 
 
@@ -37,7 +38,8 @@ def category(request, category_id):
     context = {
         'category': category,
         'galleries': category.galleries.all()
-    }.update(get_navbar_context())
+    }
+    context.update(get_navbar_context())
     return render(request, 'category.html', context)
 
 
@@ -79,7 +81,8 @@ def gallery(request, gallery_id):
         'images': images,
         'category': category,
         'gallery': gallery
-    }.update(get_navbar_context())
+    }
+    context.update(get_navbar_context())
     return render(request, 'gallery.html', context)
 
 
