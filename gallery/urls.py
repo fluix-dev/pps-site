@@ -4,6 +4,7 @@ from django.urls import path
 urlpatterns = [
     path('', views.home, name='index'),
     path('contact/', views.contact, name='contact'),
+    path('contact_post/', views.contact_post, name='contact_post'),
     path('c/<uuid:category_id>', views.category, name='category'),
     path('g/<uuid:gallery_id>', views.gallery, name='gallery'),
     path('media/<uuid:category_id>/<uuid:gallery_id>/<file>',

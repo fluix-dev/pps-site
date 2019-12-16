@@ -3,6 +3,7 @@ import os
 import sys
 import logging
 
+from .forms import *
 from .models import *
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
@@ -25,7 +26,11 @@ def home(request):
 
 
 def contact(request):
-    return render(request, 'contact.html', get_navbar_context())
+    context = {
+        'form': ContactForm()
+    }
+    context.update(get_navbar_context())
+    return render(request, 'contact.html', context)
 
 
 def category(request, category_id):
@@ -79,6 +84,26 @@ def gallery(request, gallery_id):
     }
     context.update(get_navbar_context())
     return render(request, 'gallery.html', context)
+
+
+def contact_post(request):
+    if request.method == "POST":
+        cf = ContactForm(request.POST)
+
+        # Set default fail message
+        message = 'Failed... Try again later.'
+        if(cf.is_valid()):
+            # Create actual object
+            cm = ContactMessage()
+            cm.name = cf.cleaned_data['name']
+            cm.email = cf.cleaned_data['email']
+            cm.message = cf.cleaned_data['message']
+            cm.save()
+
+            # Success Message
+            message = "Sent!"
+
+        return HttpResponse(message)
 
 
 # Create watermarks

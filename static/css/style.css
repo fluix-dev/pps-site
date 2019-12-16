@@ -1,7 +1,7 @@
 body {
   background-color: #1C1F1F;
   color: white;
-  font-family: 'Montserrat',sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 14px;
 }
 
@@ -10,8 +10,8 @@ img.nav-img {
   margin: 0 auto;
 }
 
-.navbar-nav{
-    margin: 0 auto;
+.navbar-nav {
+  margin: 0 auto;
 }
 
 .dropdown:hover {
@@ -41,11 +41,11 @@ img.nav-img {
   display: block;
   visibility: hidden;
   opacity: 0;
-  transition:         all 0.2s  ease;
-  -moz-transition:    all 0.2s  ease;
-  -webkit-transition: all 0.2s  ease;
-  -o-transition:      all 0.2s  ease;
-  -ms-transition:     all 0.2s  ease;
+  transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -63,19 +63,19 @@ img.nav-img {
 }
 
 .dropdown-toggle::after {
-    display: none;
+  display: none;
 }
 
 .nav-item {
-  max-height:40px;
+  max-height: 40px;
 }
 
 .nav-item:hover {
-  max-height:500px;
+  max-height: 500px;
 }
 
 .nav-item.show {
-  max-height:500px;
+  max-height: 500px;
 }
 
 .navbar-toggler {
@@ -95,7 +95,7 @@ img.nav-img {
 }
 
 .centered {
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0, 0, 0, .5);
   position: absolute;
   top: 90%;
   left: 50%;
@@ -103,11 +103,21 @@ img.nav-img {
   transform: translate(-50%, -50%);
 }
 
-
 .thumb {
-    display: inline-block;
-    width: 250px;
-    height: 250px;
-    background-position: center center;
-    background-size: cover;
+  display: inline-block;
+  width: 250px;
+  height: 250px;
+  background-position: center center;
+  background-size: cover;
+}
+
+.form-control {
+  color: white;
+  background-color: #233237;
+  border-radius: 0;
+}
+
+.form-control:focus {
+  color: white;
+  background-color: #233237;
 }

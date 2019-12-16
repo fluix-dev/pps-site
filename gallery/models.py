@@ -9,6 +9,16 @@ from django.urls import reverse
 from django.utils.html import format_html
 
 
+class TimeStampMixin(models.Model):
+    created_at = models.DateTimeField(
+        auto_now_add=True, help_text='Model creation time.')
+    updated_at = models.DateTimeField(
+        auto_now=True, help_text='Last update time.')
+
+    class Meta:
+        abstract = True
+
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
     parent = models.ForeignKey(
@@ -71,6 +81,17 @@ class Gallery(models.Model):
         if self.gallery_id is not None:
             return os.path.join(settings.GALLERY_ROOT, str(self.category.category_id), str(self.gallery_id))
         return None
+
+    def __str__(self):
+        return self.name
+
+
+class ContactMessage(TimeStampMixin):
+    name = models.CharField(
+        max_length=100, editable=False, help_text="User's name.")
+    email = models.EmailField(editable=False, help_text="User's email.")
+    message = models.TextField(
+        max_length=2047, editable=False, help_text="User's message.")
 
     def __str__(self):
         return self.name
