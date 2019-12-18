@@ -63,12 +63,15 @@ class Category(models.Model):
 class Gallery(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(
-        'Category', related_name='galleries', on_delete=models.CASCADE)
+        'Category', related_name='galleries', on_delete=models.CASCADE,
+        help_text='Category in which the gallery resides.')
     gallery_id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
     thumbnail = models.ImageField(
-        upload_to='gallery_thumbnails', blank=True, null=True)
-    locked = models.BooleanField(default=True)
+        upload_to='gallery_thumbnails', blank=True, null=True,
+        help_text='The thumbnail of the gallery which may be left blank.')
+    locked = models.BooleanField(default=True,
+        help_text='Whether the images within the gallery can be downloaded or are free from watermark.')
 
     class Meta:
         verbose_name = 'Gallery'
