@@ -14,7 +14,7 @@ class CategoryInline(SortableInlineAdminMixin, admin.TabularInline):
 
 class GalleryInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Gallery
-    fields = ('name', 'thumbnail', 'image_path', 'locked')
+    fields = ('name', 'thumbnail', 'image_path', 'locked', 'hidden')
     readonly_fields = ('image_path',)
     extra = 0
 
@@ -33,7 +33,14 @@ class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
         return qs
 
     list_display = ('name', 'parent')
-    fields = (('name', 'parent'), 'link_override', 'get_url_html')
+    fieldsets = (
+        ('Visibility', {
+            'fields': (('name', 'parent'), 'hidden')
+        }),
+        ('Linking', {
+            'fields': ('link_override', 'get_url_html'),
+        }),
+    )
     readonly_fields = ('get_url_html',)
 
     inlines = [
