@@ -93,6 +93,10 @@ class ContactMessage(TimeStampMixin):
     message = models.TextField(
         max_length=2047, editable=False, help_text="User's message.")
 
+    class Meta:
+        verbose_name = 'Message'
+        verbose_name_plural = 'Messages'
+
     def __str__(self):
         return self.name
 
