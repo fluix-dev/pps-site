@@ -72,6 +72,8 @@ class Gallery(models.Model):
     thumbnail = models.ImageField(
         upload_to='gallery_thumbnails', blank=True, null=True,
         help_text='The thumbnail of the gallery which may be left blank.')
+    random_thumbnail = models.BooleanField(default=True,
+        help_text="Whether a random thumbnail should be picked if the thumbnail isn't set.")
     locked = models.BooleanField(default=True,
         help_text='Whether the images within the gallery can be downloaded or are free from watermark.')
     hidden = models.BooleanField(default=False,
