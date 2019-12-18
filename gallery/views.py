@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 def get_navbar_context():
     context = {
-        'parent_categories': Category.objects.filter(parent=None),
+        'parent_categories': Category.objects.filter(parent=None).filter(hidden=False),
     }
     return context
 
@@ -37,7 +37,7 @@ def category(request, category_id):
     category = Category.objects.get(category_id=category_id)
     context = {
         'category': category,
-        'galleries': category.galleries.all()
+        'galleries': category.galleries.all().filter(hidden=False)
     }
     context.update(get_navbar_context())
     return render(request, 'category.html', context)
