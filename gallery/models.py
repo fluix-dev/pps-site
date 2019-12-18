@@ -20,13 +20,15 @@ class TimeStampMixin(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, help_text='Name of the category.')
     parent = models.ForeignKey(
-        'Category', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
+        'Category', related_name='children', on_delete=models.CASCADE, blank=True,
+        null=True, help_text='A parent category seen as the dropdown link on navbar.')
     category_id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
     link_override = models.CharField(
-        max_length=200, default=None, blank=True, null=True)
+        max_length=200, default=None, blank=True, null=True,
+        help_text='A link which overrieds the category url in the navbar.')
 
     class Meta:
         verbose_name = 'Category'
