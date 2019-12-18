@@ -29,6 +29,8 @@ class Category(models.Model):
     link_override = models.CharField(
         max_length=200, default=None, blank=True, null=True,
         help_text='A link which overrieds the category url in the navbar.')
+    hidden = models.BooleanField(default=False,
+        help_text='Whether the category should be hidden from the navbar.')
 
     class Meta:
         verbose_name = 'Category'
