@@ -72,6 +72,8 @@ class Gallery(models.Model):
         help_text='The thumbnail of the gallery which may be left blank.')
     locked = models.BooleanField(default=True,
         help_text='Whether the images within the gallery can be downloaded or are free from watermark.')
+    hidden = models.BooleanField(default=False,
+        help_text='Whether the gallery should be hidden from the category view.')
 
     class Meta:
         verbose_name = 'Gallery'
