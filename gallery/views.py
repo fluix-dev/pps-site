@@ -23,6 +23,9 @@ def get_navbar_context():
 def home(request):
     return render(request, 'index.html', get_navbar_context())
 
+def maintenance(request):
+    return render(request, 'maintenance.html')
+
 def preorder(request):
     return render(request, 'preorder.html', get_navbar_context())
 

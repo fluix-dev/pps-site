@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'gallery',
 
     'adminsortable2',
+    'maintenance_mode',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'maintenance_mode.middleware.MaintenanceModeMiddleware',
+]
+
+CONTEXT_PROCESSORS = [
+    'maintenance_mode.context_processors.maintenance_mode',
 ]
 
 ROOT_URLCONF = 'pps.urls'
@@ -158,6 +165,9 @@ GALLERY_ROOT = os.path.join(BASE_DIR, 'protected/')
 
 MEDIA_ROOT = GALLERY_ROOT
 
+MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
+MAINTENANCE_MODE_IGNORE_URLS = ('/maintenance/',)
+MAINTENANCE_MODE_REDIRECT_URL = '/maintenance/'
 
 try:
     from local_settings import *
