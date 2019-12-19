@@ -100,12 +100,23 @@ LOGGING = {
             'filename': 'debug.log',
             'formatter': 'verbose'
         },
+        'warning': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'warning.log',
+            'formatter': 'verbose'
+        },
     },
     'loggers': {
         'django': {
             'handlers':['file'],
             'propagate': True,
             'level':'DEBUG',
+        },
+        'django_warning': {
+            'handlers':['warning'],
+            'propagate': True,
+            'level':'WARNING',
         },
     }
 }
