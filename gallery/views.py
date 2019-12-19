@@ -156,7 +156,7 @@ def serve_gallery_thumbnail(request, category_id, gallery_id, file):
 
 # Serve full gallery images
 def serve_gallery_image(request, category_id, gallery_id, file):
-    if (not Gallery.objects.all().get(gallery_id=gallery_id).locked or
+    if (not Gallery.objects.all().get(gallery_id=gallery_id).locked and
             not Settings.objects.all().first().lock_all):
         image = os.path.join(str(category_id), str(gallery_id), str(file))
     else:
