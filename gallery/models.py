@@ -1,4 +1,5 @@
 import os
+import random
 import uuid
 
 from django.conf import settings
@@ -30,7 +31,7 @@ class Category(models.Model):
         max_length=200, default=None, blank=True, null=True,
         help_text='A link which overrieds the category url in the navbar.')
     hidden = models.BooleanField(default=False,
-        help_text='Whether the category should be hidden from the navbar.')
+                                 help_text='Whether the category should be hidden from the navbar.')
 
     class Meta:
         verbose_name = 'Category'
@@ -73,11 +74,11 @@ class Gallery(models.Model):
         upload_to='gallery_thumbnails', blank=True, null=True,
         help_text='The thumbnail of the gallery which may be left blank.')
     random_thumbnail = models.BooleanField(default=True,
-        help_text="Whether a random thumbnail should be picked if the thumbnail isn't set.")
+                                           help_text="Whether a random thumbnail should be picked if the thumbnail isn't set.")
     locked = models.BooleanField(default=True,
-        help_text='Whether the images within the gallery can be downloaded or are free from watermark.')
+                                 help_text='Whether the images within the gallery can be downloaded or are free from watermark.')
     hidden = models.BooleanField(default=False,
-        help_text='Whether the gallery should be hidden from the category view.')
+                                 help_text='Whether the gallery should be hidden from the category view.')
 
     class Meta:
         verbose_name = 'Gallery'
@@ -92,6 +93,29 @@ class Gallery(models.Model):
         if self.gallery_id is not None:
             return os.path.join(settings.GALLERY_ROOT, str(self.category.category_id), str(self.gallery_id))
         return None
+
+    @property
+    def get_thumbnail_url(self):
+        if self.thumbnail:
+            # Specified thumbnail
+            return reverse('serve_thumbnail', args=[os.path.basename(self.thumbnail.name)])
+        else:
+            # Random thumbnail
+            if self.random_thumbnail:
+                # Get list of all thumbnail
+                root_url = os.path.join(settings.GALLERY_ROOT, str(
+                    self.category.category_id), str(self.gallery_id))
+                thumbnail_url = os.path.join(root_url, 'thumbnails')
+                thumbnails = [f for f in os.listdir(
+                    thumbnail_url) if os.path.isfile(os.path.join(thumbnail_url, f))]
+
+                # Choose random thumbnail
+                if (len(thumbnails) != 0):
+                    return reverse('serve_gallery_image',
+                                   args=[self.category.category_id, self.gallery_id, random.choice(thumbnails)])
+
+        # Fallback to blank thumbnail
+        return settings.STATIC_URL + '/img/blank.png'
 
     def __str__(self):
         return self.name

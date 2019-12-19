@@ -10,8 +10,7 @@
     {% for gallery in galleries %}
     <a href="{% url 'gallery' gallery.gallery_id %}">
       <div class="galleries">
-        <div class="thumb" style="background-image:url({% if not gallery.thumbnail %}{% static 'img/blank.png' %}
-                                                       {% else %}{% get_media_prefix  %}{{gallery.thumbnail}}{% endif %})">
+        <div class="thumb" style="background-image:url({{gallery.get_thumbnail_url}})">
         </div>
         <div class="centered">{{gallery.name}}</div>
       </div>
