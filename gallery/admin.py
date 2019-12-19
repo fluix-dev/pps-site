@@ -68,3 +68,5 @@ class ContactMessageAdmin(admin.ModelAdmin):
             'fields': ('created_at', 'updated_at'),
         }),
     )
+
+admin.site.site_header = 'Prime Pix Studio Administration'
