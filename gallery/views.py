@@ -112,6 +112,7 @@ def contact_post(request):
             message = "Sent!"
 
         return HttpResponse(message)
+    return Http404()
 
 
 # Create watermarks
