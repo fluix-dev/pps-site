@@ -6,7 +6,7 @@ import logging
 from .forms import *
 from .models import *
 from django.http import HttpResponse, Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404, get_object_or_404
 from os.path import isfile, join
 from PIL import Image, ImageDraw, ImageFont
 from threading import Thread
@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 def get_navbar_context():
     context = {
-        'parent_categories': Category.objects.filter(parent=None).filter(hidden=False),
+        'parent_categories': get_list_or_404(Category, parent=None, hidden=False),
     }
     return context
 
@@ -35,7 +35,7 @@ def contact(request):
     return render(request, 'contact.html', context)
 
 def category(request, category_id):
-    category = Category.objects.get(category_id=category_id)
+    category = get_object_or_404(Category, category_id=category_id)
     context = {
         'category': category,
         'galleries': category.galleries.all().filter(hidden=False)
@@ -45,7 +45,7 @@ def category(request, category_id):
 
 
 def gallery(request, gallery_id):
-    gallery = Gallery.objects.get(gallery_id=gallery_id)
+    gallery = get_object_or_404(Gallery, gallery_id=gallery_id)
     category = gallery.category
     root_url = os.path.join(settings.GALLERY_ROOT, str(
         gallery.category.category_id), str(gallery_id))
