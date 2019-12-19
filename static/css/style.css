@@ -121,3 +121,7 @@ img.nav-img {
   color: white;
   background-color: #233237;
 }
+
+.navlink {
+  text-decoration: none!important;
+}

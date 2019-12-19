@@ -3,7 +3,7 @@
 
 {% block body %}
 <div class="container">
-  {{category.name}}&nbsp;&nbsp;&nbsp;<i class="zmdi zmdi-chevron-right"></i>&nbsp;&nbsp;&nbsp;{{gallery.name}}
+  <a class="text-white navlink" href="{{category.get_url}}">{{category.name}}</a>&nbsp;&nbsp;&nbsp;<i class="zmdi zmdi-chevron-right"></i>&nbsp;&nbsp;&nbsp;{{gallery.name}}
 </div>
 
 <div id="nanogallery2" data-nanogallery2='{
