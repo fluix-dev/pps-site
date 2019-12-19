@@ -156,6 +156,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 GALLERY_URL = '/protected/'
 GALLERY_ROOT = os.path.join(BASE_DIR, 'protected/')
 
+MEDIA_ROOT = GALLERY_ROOT
+
+
 try:
     from local_settings import *
 except ImportError:
