@@ -24,6 +24,8 @@ def get_navbar_context():
 def home(request):
     return render(request, 'index.html', get_navbar_context())
 
+def preorder(request):
+    return render(request, 'preorder.html', get_navbar_context())
 
 def contact(request):
     context = {
@@ -31,7 +33,6 @@ def contact(request):
     }
     context.update(get_navbar_context())
     return render(request, 'contact.html', context)
-
 
 def category(request, category_id):
     category = Category.objects.get(category_id=category_id)
