@@ -69,4 +69,12 @@ class ContactMessageAdmin(admin.ModelAdmin):
         }),
     )
 
+@admin.register(Settings)
+class SettingsAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ('Global Settings', {
+            'fields': ('lock_all', 'disable_creation')
+        }),
+    )
+
 admin.site.site_header = 'Prime Pix Studio Administration'

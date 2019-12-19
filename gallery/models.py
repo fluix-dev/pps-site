@@ -135,6 +135,21 @@ class ContactMessage(TimeStampMixin):
     def __str__(self):
         return self.name
 
+class Settings(models.Model):
+    lock_all = models.BooleanField(default=False, help_text='Lock all galleries.')
+    disable_creation = models.BooleanField(default=False, help_text='Disable creation of thumbnails or watermarks.')
+
+    class Meta:
+        verbose_name = 'Settings'
+        verbose_name_plural = 'Settings'
+
+    def save(self, *args, **kwargs):
+        if not self.pk and Settings.objects.exists():
+            raise ValidationError('There is can be only one Settings instance.')
+        return super(Settings, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return 'Global Settings'
 
 @receiver(post_save, sender=Gallery)
 def create_image_paths(sender, instance, **kwargs):

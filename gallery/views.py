@@ -51,30 +51,35 @@ def gallery(request, gallery_id):
     thumbnail_url = os.path.join(root_url, 'thumbnails')
     watermark_url = os.path.join(root_url, 'watermarked')
 
-    # Get list of images and thumbnails
+    # Get list of images
     images = [f for f in os.listdir(root_url) if isfile(join(root_url, f))]
-    thumbnails = [f for f in os.listdir(
-        thumbnail_url) if isfile(join(thumbnail_url, f))]
-    watermarked = [f for f in os.listdir(
-        watermark_url) if isfile(join(watermark_url, f))]
 
-    # Generate thumbnails
-    if (len(images) != len(thumbnails)):
-        maxsize = (256, 256)
-        for infile in images:
-            outfile = os.path.join(thumbnail_url, infile)
-            try:
-                im = Image.open(os.path.join(root_url, infile))
-                im.thumbnail(maxsize, Image.ANTIALIAS)
-                im.save(outfile, "JPEG")
-            except IOError:
-                print('Failed creating a thumbnail.')
+    # Get global settings
+    g_settings = Settings.objects.all().first()
+    if (g_settings.disable_creation):
+        # Get list of thumbnails and watermarks
+        thumbnails = [f for f in os.listdir(
+            thumbnail_url) if isfile(join(thumbnail_url, f))]
+        watermarked = [f for f in os.listdir(
+            watermark_url) if isfile(join(watermark_url, f))]
 
-    # Generate watermakred images
-    if (len(images) != len(watermarked)):
-        thread = Thread(target=create_watermarks, args=(
-            images, root_url, watermark_url))
-        thread.start()
+        # Generate thumbnails
+        if (len(images) != len(thumbnails)):
+            maxsize = (256, 256)
+            for infile in images:
+                outfile = os.path.join(thumbnail_url, infile)
+                try:
+                    im = Image.open(os.path.join(root_url, infile))
+                    im.thumbnail(maxsize, Image.ANTIALIAS)
+                    im.save(outfile, "JPEG")
+                except IOError:
+                    print('Failed creating a thumbnail.')
+
+        # Generate watermakred images
+        if (len(images) != len(watermarked)):
+            thread = Thread(target=create_watermarks, args=(
+                images, root_url, watermark_url))
+            thread.start()
 
     context = {
         'base_url': '/media/' + str(gallery.category.category_id) + '/' + str(gallery_id) + '/',
@@ -151,7 +156,8 @@ def serve_gallery_thumbnail(request, category_id, gallery_id, file):
 
 # Serve full gallery images
 def serve_gallery_image(request, category_id, gallery_id, file):
-    if not Gallery.objects.all().get(gallery_id=gallery_id).locked:
+    if (not Gallery.objects.all().get(gallery_id=gallery_id).locked or
+            Settings.objects.all().first().lock_all):
         image = os.path.join(str(category_id), str(gallery_id), str(file))
     else:
         image = os.path.join(str(category_id), str(
