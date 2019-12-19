@@ -111,7 +111,7 @@ class Gallery(models.Model):
 
                 # Choose random thumbnail
                 if (len(thumbnails) != 0):
-                    return reverse('serve_gallery_image',
+                    return reverse('serve_gallery_thumbnail',
                                    args=[self.category.category_id, self.gallery_id, random.choice(thumbnails)])
 
         # Fallback to blank thumbnail
