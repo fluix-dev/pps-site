@@ -40,7 +40,9 @@
           {% if category.children.all.count is not 0 %}
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             {% for child in category.children.all %}
-            <a class="dropdown-item" href="{% url 'category' child.category_id %}">{{child.name|upper}}</a>
+              {% if not child.hidden %}
+              <a class="dropdown-item" href="{% url 'category' child.category_id %}">{{child.name|upper}}</a>
+              {% endif %}
             {% endfor %}
           </div>
           {% endif %}
