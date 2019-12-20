@@ -7,7 +7,7 @@ from django.contrib import admin
 
 class CategoryInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Category
-    fields = ('name', 'link_override', 'get_url_html', 'get_admin_url')
+    fields = ('name', 'link_override', 'get_url_html', 'get_admin_url', 'hidden')
     readonly_fields = ('get_url_html', 'get_admin_url')
     extra = 0
 
