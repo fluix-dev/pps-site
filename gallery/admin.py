@@ -35,7 +35,7 @@ class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ('name', 'parent')
     fieldsets = (
         ('Visibility', {
-            'fields': (('name', 'parent'), 'hidden')
+            'fields': (('name', 'parent'), 'banner', 'hidden')
         }),
         ('Linking', {
             'fields': ('link_override', 'get_url_html'),

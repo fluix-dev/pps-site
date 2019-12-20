@@ -7,6 +7,11 @@
 </div>
 <div class="container-fluid">
   <div class="row justify-content-center">
+    {% if category.banner %}
+    <h6>{{category.banner}}</h6>
+    {% endif %}
+  </div>
+  <div class="row justify-content-center">
     {% for gallery in galleries %}
     <a href="{% url 'gallery' gallery.gallery_id %}">
       <div class="galleries">
