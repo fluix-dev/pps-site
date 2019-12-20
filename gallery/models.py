@@ -31,7 +31,7 @@ class Category(models.Model):
         max_length=200, default=None, blank=True, null=True,
         help_text='A link which overrieds the category url in the navbar.')
     banner = models.CharField(max_length=1000, default=None, blank=True, null=True,
-                              help_text="A banner showed on the Category's page.")
+                              help_text="A banner shown on the Category's page.")
     hidden = models.BooleanField(default=False,
                                  help_text='Whether the category should be hidden from the navbar.')
 
