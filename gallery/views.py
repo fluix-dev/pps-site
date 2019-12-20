@@ -59,7 +59,7 @@ def gallery(request, gallery_id):
 
     # Get global settings
     g_settings = Settings.objects.all().first()
-    if (g_settings.disable_creation):
+    if not g_settings.disable_creation:
         # Get list of thumbnails and watermarks
         thumbnails = [f for f in os.listdir(
             thumbnail_url) if isfile(join(thumbnail_url, f))]
