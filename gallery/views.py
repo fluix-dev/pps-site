@@ -181,7 +181,6 @@ def serve_protected(request, file):
 
     # Let Django serve the file itself
     file = os.path.join(settings.MEDIA_ROOT, file)
-    print("File: ", file)
     try:
         with open(file, "rb") as f:
             return HttpResponse(f.read(), content_type="image/jpeg")
