@@ -171,9 +171,25 @@ def serve_gallery_image(request, category_id, gallery_id, file):
 
 # Serve requested file
 def serve_protected(request, file):
-    response = HttpResponse()
-    response['Content-Type'] = ''
-    response['X-Accel-Redirect'] = '/protected/' + str(file)
-    logger.debug(file)
-    logger.debug(response)
-    return response
+    # Use XSendFile if it's enabled
+    g_settings = Settings.objects.all().first()
+    if g_settings.use_x_sendfile:
+        response = HttpResponse()
+        response['Content-Type'] = ''
+        response['X-Accel-Redirect'] = '/protected/' + str(file)
+        logger.debug(file)
+        logger.debug(response)
+        return response
+
+    # Let Django serve the file itself
+    file = os.path.join(settings.MEDIA_ROOT, file)
+    print("File: ", file)
+    try:
+        with open(file, "rb") as f:
+            return HttpResponse(f.read(), content_type="image/jpeg")
+    except IOError:
+        # Empty image
+        red = Image.new('RGB', (1, 1), (0, 0, 0, 0))
+        response = HttpResponse(content_type="image/jpeg")
+        red.save(response, "JPEG")
+        return response

@@ -73,7 +73,7 @@ class ContactMessageAdmin(admin.ModelAdmin):
 class SettingsAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Global Settings', {
-            'fields': ('lock_all', 'disable_creation')
+            'fields': ('lock_all', 'disable_creation', 'use_x_sendfile')
         }),
     )
 
