@@ -201,7 +201,7 @@ class GalleryAdmin(admin.ModelAdmin):
 class SettingsAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Global Settings', {
-            'fields': ('lock_all', 'disable_creation', 'use_x_sendfile')
+            'fields': ('lock_all', 'use_x_sendfile')
         }),
     )
 
