@@ -98,7 +98,7 @@ class Gallery(models.Model):
 
     @property
     def get_admin_url(self):
-        info = (self._meta.app_label, self._meta.model_name)
+        info = (self.category._meta.app_label, self.category._meta.model_name)
         admin_url = reverse('admin:%s_%s_change' % info, args=(self.category.pk,))
         return format_html("<a href='{url}'>{name}</a>", url=admin_url, name=self.category.name)
 
