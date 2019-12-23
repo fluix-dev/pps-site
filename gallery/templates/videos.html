@@ -5,10 +5,9 @@
 <div class="row justify-content-center">
 {% for video in videos %}
 <div class="col col-12 col-md-6 col-lg-3" style="border-style: solid; border-width: 1px; border-color: red; margin:5px 5px;">
-    <label>{{video}}</label>
-    <video width="320" height="240" controls preload="metadata">
-      <source src="{{base_url}}{{video}}#t=0.5" type="video/mp4">
-    </video>
+    <!--<video width="320" height="240" controls preload="metadata">-->
+    <a href="{{base_url}}{{video}}">{{video}}</a>
+    <!--</video>-->
   </div>
 {% endfor %}
 </div>
