@@ -127,7 +127,7 @@ def serve_protected(request, file):
     file = os.path.join(settings.MEDIA_ROOT, file)
     try:
         with open(file, "rb") as f:
-            return HttpResponse(f.read(), content_type="image/jpeg")
+            return HttpResponse(f.read(), content_type="")
     except IOError:
         # Empty image
         red = Image.new('RGB', (1, 1), (0, 0, 0, 0))
