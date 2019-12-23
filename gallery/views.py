@@ -174,8 +174,6 @@ def serve_protected(request, file):
     response = HttpResponse()
     response['Content-Type'] = ''
     response['X-Accel-Redirect'] = '/protected/' + str(file)
-    response['Content-Disposition'] = 'attachment; filename="{}"'.format(
-        os.path.basename(file))
     logger.debug(file)
     logger.debug(response)
     return response
