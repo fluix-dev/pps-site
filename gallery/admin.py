@@ -85,7 +85,7 @@ class ContactMessageAdmin(admin.ModelAdmin):
 @admin.register(Gallery)
 class GalleryAdmin(admin.ModelAdmin):
     # Displayed in list view
-    list_display = ('name', 'category', 'locked', 'hidden', 'account_actions')
+    list_display = ('name', 'get_admin_url', 'locked', 'hidden', 'account_actions')
     readonly_fields = ('account_actions',)
     search_fields = ['name']
     ordering = ('category__name','name')

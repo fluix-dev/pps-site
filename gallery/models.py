@@ -97,6 +97,12 @@ class Gallery(models.Model):
         return None
 
     @property
+    def get_admin_url(self):
+        info = (self._meta.app_label, self._meta.model_name)
+        admin_url = reverse('admin:%s_%s_change' % info, args=(self.pk,))
+        return format_html("<a href='{url}'>{name}</a>", url=admin_url, name=self.category.name)
+
+    @property
     def get_thumbnail_url(self):
         if self.thumbnail:
             # Specified thumbnail
