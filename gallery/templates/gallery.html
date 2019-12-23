@@ -17,12 +17,21 @@
     "thumbnailLabel": {"display": false},
     "itemsBaseURL": "{{base_url}}",
     "viewerToolbar": {"display": false},
+    "thumbnailHoverEffect2":  null,
     "viewerTools" : {"topRight": "zoomButton, {% if not gallery.locked %}downloadButton, {% endif %}closeButton"}
-
   }'>
 
   {% for image in images %}
   <a href="{{image}}" data-ngthumb="thumbnails/{{image}}"></a>
   {% endfor %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  window.setInterval(function() {
+    $(".nGY2GThumbnailIcons").css("filter", "blur(0px) brightness(100%) grayscale(0%) sepia(0%) contrast(100%) opacity(1) saturate(100%);");
+    console.log($(".nGY2GThumbnailIcons").css("opacity"));
+  }, 1000);
+</script>
 {% endblock %}
