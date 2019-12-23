@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+  <h6>Please note, you may not be able to download Watermarked images.</h6>
+  <br>
+  <h5>Download Images:</h5>
+  <h6>&nbsp;&nbsp;&nbsp;Computer or Laptop:</h6>
+  <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Visit</b> your gallery.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Open</b> an image by clicking on it.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Click the <b>Download</b> icon ( <i class="zmdi zmdi-download"></i> ) or Right-Click and press Save-As.<br>
+  </p>
+  <br><h6>&nbsp;&nbsp;&nbsp;iOS Devices (iPhone, iPad):</h6>
+  <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Visit</b> your gallery.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Open</b> an image by tapping on it.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Click the <b>Download</b> icon ( <i class="zmdi zmdi-download"></i> ).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Press <b>View</b>.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Hold down</b> on the image and press <b>Add to Photos</b>.
+  </p>
+  <br><h6>&nbsp;&nbsp;&nbsp;Android Devices (Samsung, Google, etc.):</h6>
+  <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Visit</b> your gallery.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Open</b> an image by tapping on it.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Click the <b>Download</b> icon ( <i class="zmdi zmdi-download"></i> ) or Hold Down on the image and press Download Image.<br>
+  </p>
+  <br>
+  <h5>Download Videos:</h5>
+  <h6>&nbsp;&nbsp;&nbsp;Computer or Laptop:</h6>
+  <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Visit</b> your video gallery.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Click</b> a video link.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Right Click</b> the video and press <b>Save Video As</b>.<br>
+  </p>
+  <br><h6>&nbsp;&nbsp;&nbsp;iOS Devices - Safari (iPhone, iPad):</h6>
+  <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Visit</b> your video gallery.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Hold Down</b> on a video link.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Press <b>Download Linked File</b> to Download it.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Press the <b>Downlod Icon</b> ( <i class="zmdi zmdi-download"></i> in a circle ) of Safari (in the top-right corner).<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Press on the downloaded video to open it.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Press the <b>Share Icon</b> ( <i class="zmdi zmdi-upload"></i> ) in the bottom-left corner.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Choose <b>Save Video</b> to save it to your camera roll or any other option to send it to someone.<br>
+  </p>
+  <br><h6>&nbsp;&nbsp;&nbsp;Android Devices (Samsung, Google, etc.):</h6>
+  <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Visit</b> your video gallery<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <b>Press</b> a video link to open it.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Click the <b>Settings</b> icon ( <i class="zmdi zmdi-more-vert"></i> ) in the bottom right.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Press the <i class="zmdi zmdi-download"></i> <b>Download</b> button.
+  </p>
+  <br>
+  <h5>If you are still having trouble downloading images or video, please <a href="{% url 'contact' %}">contact us</a>.</h5>
+</div>
+{% endblock %}

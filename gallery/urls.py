@@ -6,6 +6,7 @@ urlpatterns = [
     path('preorder/', views.preorder, name='preorder'),
     path('contact/', views.contact, name='contact'),
     path('contact_post/', views.contact_post, name='contact_post'),
+    path('help/', views.help, name='help'),
     path('c/<uuid:category_id>', views.category, name='category'),
     path('g/<uuid:gallery_id>', views.gallery, name='gallery'),
     path('v/<uuid:gallery_id>', views.videos, name='videos'),

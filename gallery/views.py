@@ -20,6 +20,9 @@ def get_navbar_context():
     }
     return context
 
+def help(request):
+    return render(request, 'help.html', get_navbar_context())
+    
 def home(request):
     return render(request, 'index.html', get_navbar_context())
 

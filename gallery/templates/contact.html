@@ -12,9 +12,11 @@
     <br>
     <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Contact Us</h2>
     <br>
-    
+
     <!-- Contact Section Form -->
-    <div class="row">
+    <div class="row justify-content-center">
+      <h6>If you are having trouble downloading images or videos, please read <a href="{% url 'help' %}">this</a> before contacting us.</h6>
+
       <div class="col-lg-8 mx-auto">
         <form action="/contact_post/" method="POST" id="contact-form">
           {% csrf_token %}
