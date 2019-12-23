@@ -54,6 +54,7 @@ def gallery(request, gallery_id):
 
     # Get list of images
     images = [f for f in os.listdir(root_url) if isfile(join(root_url, f))]
+    images = [f for f in images if 'jpg' in os.path.splitext(f)[1]]
     images.sort()
 
     context = {

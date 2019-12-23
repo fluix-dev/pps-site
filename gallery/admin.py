@@ -125,6 +125,7 @@ class GalleryAdmin(admin.ModelAdmin):
 
         # Get list of images
         images = [f for f in os.listdir(root_url) if isfile(join(root_url, f))]
+        images = [f for f in images if 'jpg' in os.path.splitext(f)[1]]
         images.sort()
 
         # Generate thumbnails
@@ -145,6 +146,7 @@ class GalleryAdmin(admin.ModelAdmin):
 
         # Get list of images
         images = [f for f in os.listdir(root_url) if isfile(join(root_url, f))]
+        images = [f for f in images if 'jpg' in os.path.splitext(f)[1]]
         images.sort()
 
         # Generate watermakred images
