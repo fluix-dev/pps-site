@@ -177,8 +177,6 @@ def serve_protected(request, file):
         response = HttpResponse()
         response['Content-Type'] = ''
         response['X-Accel-Redirect'] = '/protected/' + str(file)
-        logger.debug(file)
-        logger.debug(response)
         return response
 
     # Let Django serve the file itself
