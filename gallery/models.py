@@ -139,7 +139,6 @@ class ContactMessage(TimeStampMixin):
 
 class Settings(models.Model):
     lock_all = models.BooleanField(default=False, help_text='Lock all galleries.')
-    disable_creation = models.BooleanField(default=False, help_text='Disable creation of thumbnails or watermarks.')
     use_x_sendfile = models.BooleanField(default=True, help_text="Whether to send files using Nginx's XSendFile Header or not.")
 
     class Meta:

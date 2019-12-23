@@ -50,43 +50,14 @@ def gallery(request, gallery_id):
     gallery = get_object_or_404(Gallery, gallery_id=gallery_id)
     category = gallery.category
     root_url = os.path.join(settings.GALLERY_ROOT, str(
-        gallery.category.category_id), str(gallery_id))
-    thumbnail_url = os.path.join(root_url, 'thumbnails')
-    watermark_url = os.path.join(root_url, 'watermarked')
+        category.category_id), str(gallery_id))
 
     # Get list of images
     images = [f for f in os.listdir(root_url) if isfile(join(root_url, f))]
     images.sort()
 
-    # Get global settings
-    g_settings = Settings.objects.all().first()
-    if not g_settings.disable_creation:
-        # Get list of thumbnails and watermarks
-        thumbnails = [f for f in os.listdir(
-            thumbnail_url) if isfile(join(thumbnail_url, f))]
-        watermarked = [f for f in os.listdir(
-            watermark_url) if isfile(join(watermark_url, f))]
-
-        # Generate thumbnails
-        if (len(images) != len(thumbnails)):
-            maxsize = (256, 256)
-            for infile in images:
-                outfile = os.path.join(thumbnail_url, infile)
-                try:
-                    im = Image.open(os.path.join(root_url, infile))
-                    im.thumbnail(maxsize, Image.ANTIALIAS)
-                    im.save(outfile, "JPEG")
-                except IOError:
-                    print('Failed creating a thumbnail.')
-
-        # Generate watermakred images
-        if (len(images) != len(watermarked)):
-            thread = Thread(target=create_watermarks, args=(
-                images, root_url, watermark_url))
-            thread.start()
-
     context = {
-        'base_url': '/media/' + str(gallery.category.category_id) + '/' + str(gallery_id) + '/',
+        'base_url': '/media/' + str(category.category_id) + '/' + str(gallery_id) + '/',
         'images': images,
         'category': category,
         'gallery': gallery
@@ -114,35 +85,6 @@ def contact_post(request):
 
         return HttpResponse(message)
     return Http404()
-
-
-# Create watermarks
-def create_watermarks(images, root_url, watermark_url):
-    for infile in images:
-        outfile = os.path.join(watermark_url, infile)
-        try:
-            # Open images
-            im = Image.open(os.path.join(root_url, infile))
-            watermark = Image.open(os.path.join(
-                settings.STATIC_ROOT, 'img', 'watermark.png'))
-
-            # Calculate dimensions
-            maxwidth, maxheight = im.size
-            width, height = watermark.size
-            ratio = min(maxwidth / width, maxheight / height)
-            watermark = watermark.resize(
-                (math.floor(width * ratio), math.floor(height * ratio)))
-            width, height = watermark.size
-            watermark_pos = (math.floor(maxwidth / 2 - width / 2),
-                             math.floor(maxheight / 2 - height / 2))
-
-            # Create final image
-            transparent = Image.new('RGBA', im.size, (0, 0, 0, 0))
-            transparent.paste(im, (0, 0))
-            transparent.paste(watermark, watermark_pos, mask=watermark)
-            transparent.convert('RGB').save(outfile, "JPEG")
-        except IOError:
-            print('Failed creating a watermark.')
 
 
 # Serve full gallery thumbnail
