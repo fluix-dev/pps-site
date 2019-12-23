@@ -22,7 +22,7 @@ def get_navbar_context():
 
 def help(request):
     return render(request, 'help.html', get_navbar_context())
-    
+
 def home(request):
     return render(request, 'index.html', get_navbar_context())
 
@@ -128,7 +128,8 @@ def serve_gallery_thumbnail(request, category_id, gallery_id, file):
 # Serve full gallery images
 def serve_gallery_image(request, category_id, gallery_id, file):
     if (not Gallery.objects.all().get(gallery_id=gallery_id).locked and
-            not Settings.objects.all().first().lock_all):
+            not Settings.objects.all().first().lock_all or
+            'mp4' in os.path.splitext(file)[1]):
         image = os.path.join(str(category_id), str(gallery_id), str(file))
     else:
         image = os.path.join(str(category_id), str(
