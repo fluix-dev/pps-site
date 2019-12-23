@@ -88,9 +88,7 @@ class GalleryAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'locked', 'hidden', 'account_actions')
     readonly_fields = ('account_actions',)
     search_fields = ['name']
-
-    def get_ordering(self, request):
-        return [Lower('category')]  # sort case insensitive
+    ordering = ('category__name',)
 
     def account_actions(self, obj):
         # TODO: Render action buttons
