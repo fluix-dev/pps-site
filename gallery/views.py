@@ -67,6 +67,26 @@ def gallery(request, gallery_id):
     return render(request, 'gallery.html', context)
 
 
+def videos(request, gallery_id):
+    gallery = get_object_or_404(Gallery, gallery_id=gallery_id)
+    category = gallery.category
+    root_url = os.path.join(settings.GALLERY_ROOT, str(
+        category.category_id), str(gallery_id))
+
+    # Get list of images
+    videos = [f for f in os.listdir(root_url) if isfile(join(root_url, f))]
+    videos = [f for f in videos if 'mp4' in os.path.splitext(f)[1]]
+    videos.sort()
+
+    context = {
+        'base_url': '/media/' + str(category.category_id) + '/' + str(gallery_id) + '/',
+        'videos': videos,
+        'category': category,
+        'gallery': gallery
+    }
+    context.update(get_navbar_context())
+    return render(request, 'videos.html', context)
+
 def contact_post(request):
     if request.method == "POST":
         cf = ContactForm(request.POST)
