@@ -26,12 +26,3 @@
   {% endfor %}
 </div>
 {% endblock %}
-
-{% block scripts %}
-<script>
-  window.setInterval(function() {
-    $(".nGY2GThumbnailIcons").css("filter", "blur(0px) brightness(100%) grayscale(0%) sepia(0%) contrast(100%) opacity(1) saturate(100%);");
-    console.log($(".nGY2GThumbnailIcons").css("opacity"));
-  }, 1000);
-</script>
-{% endblock %}
