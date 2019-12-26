@@ -1,2 +1,2 @@
-# pps-site
-primepixstudio.com website
+## Prime Pix Studio
+Prime Pix Studio is a photography and videography company focused on events related to dance. This repository contains the code for its website, made with the [Django](https://github.com/django/django) framework and the [nanogallery2](https://nanogallery2.nanostudio.org/) image gallery. This project is ongoing and being continously developed upon. It is licensed under the GPL V2 license.
