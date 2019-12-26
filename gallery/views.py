@@ -3,13 +3,14 @@ import os
 import sys
 import logging
 
-from .forms import *
-from .models import *
+from .forms import ContactForm
+from .models import Category, ContactMessage, Gallery, Settings
+
+from django.conf import settings
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_list_or_404, get_object_or_404
-from os.path import isfile, join
+
 from PIL import Image, ImageDraw, ImageFont
-from threading import Thread
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +57,7 @@ def gallery(request, gallery_id):
         category.category_id), str(gallery_id))
 
     # Get list of images
-    images = [f for f in os.listdir(root_url) if isfile(join(root_url, f))]
+    images = [f for f in os.listdir(root_url) if os.path.isfile(os.path.join(root_url, f))]
     images = [f for f in images if 'jpg' in os.path.splitext(f)[1]]
     images.sort()
 
@@ -77,7 +78,7 @@ def videos(request, gallery_id):
         category.category_id), str(gallery_id))
 
     # Get list of images
-    videos = [f for f in os.listdir(root_url) if isfile(join(root_url, f))]
+    videos = [f for f in os.listdir(root_url) if os.path.isfile(os.path.join(root_url, f))]
     videos = [f for f in videos if 'mp4' in os.path.splitext(f)[1]]
     videos.sort()
 
