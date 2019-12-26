@@ -11,7 +11,7 @@ from django.urls import path
 
 from os.path import isfile, join
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 from threading import Thread
 
 
