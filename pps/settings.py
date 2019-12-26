@@ -174,8 +174,3 @@ MEDIA_ROOT = GALLERY_ROOT
 MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
 MAINTENANCE_MODE_IGNORE_URLS = ('/maintenance/',)
 MAINTENANCE_MODE_REDIRECT_URL = '/maintenance/'
-
-try:
-    from local_settings import *
-except ImportError:
-    pass
