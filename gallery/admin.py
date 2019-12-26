@@ -1,6 +1,5 @@
 import math
 import os
-import uuid
 
 from .models import Category, ContactMessage, Gallery, Settings
 
@@ -8,7 +7,6 @@ from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 
 from django.conf import settings
 from django.contrib import admin
-from django.db.models.functions import Lower
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.urls import path, reverse

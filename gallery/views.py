@@ -1,6 +1,4 @@
-import math
 import os
-import sys
 import logging
 
 from .forms import ContactForm
@@ -10,7 +8,7 @@ from django.conf import settings
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +19,7 @@ def get_navbar_context():
     }
     return context
 
-def help(request):
+def download_help(request):
     return render(request, 'help.html', get_navbar_context())
 
 def home(request):
