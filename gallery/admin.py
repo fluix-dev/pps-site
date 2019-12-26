@@ -1,15 +1,18 @@
-import uuid
 import math
+import os
+import uuid
 
-from .models import *
+from .models import Category, ContactMessage, Gallery, Settings
+
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
+
+from django.conf import settings
 from django.contrib import admin
 from django.db.models.functions import Lower
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
-from django.urls import path
-
-from os.path import isfile, join
+from django.urls import path, reverse
+from django.utils.html import format_html
 
 from PIL import Image
 from threading import Thread
@@ -124,7 +127,7 @@ class GalleryAdmin(admin.ModelAdmin):
         thumbnail_url = os.path.join(root_url, 'thumbnails')
 
         # Get list of images
-        images = [f for f in os.listdir(root_url) if isfile(join(root_url, f))]
+        images = [f for f in os.listdir(root_url) if os.path.isfile(os.path.join(root_url, f))]
         images = [f for f in images if 'jpg' in os.path.splitext(f)[1]]
         images.sort()
 
@@ -145,7 +148,7 @@ class GalleryAdmin(admin.ModelAdmin):
         watermark_url = os.path.join(root_url, 'watermarked')
 
         # Get list of images
-        images = [f for f in os.listdir(root_url) if isfile(join(root_url, f))]
+        images = [f for f in os.listdir(root_url) if os.path.isfile(os.path.join(root_url, f))]
         images = [f for f in images if 'jpg' in os.path.splitext(f)[1]]
         images.sort()
 
