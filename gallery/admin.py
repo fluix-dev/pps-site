@@ -171,6 +171,9 @@ class GalleryAdmin(admin.ModelAdmin):
             im.thumbnail(maxsize, Image.ANTIALIAS)
             im.save(outfile, "JPEG")
 
+            # Close image
+            im.close()
+
     # Create watermarks
     def create_watermarks(self, images, root_url, watermark_url):
         for infile in images:
@@ -196,6 +199,11 @@ class GalleryAdmin(admin.ModelAdmin):
             transparent.paste(im, (0, 0))
             transparent.paste(watermark, watermark_pos, mask=watermark)
             transparent.convert('RGB').save(outfile, "JPEG")
+
+            # Close images
+            im.close()
+            watermark.close()
+            transparent.close()
 
 
 @admin.register(Settings)
