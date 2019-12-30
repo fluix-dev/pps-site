@@ -12,6 +12,7 @@ from PIL import Image
 
 logger = logging.getLogger(__name__)
 
+WORD_BLACKLIST = ['sex', 'porn', 'dating', 'seo']
 
 def get_navbar_context():
     context = {
@@ -96,6 +97,12 @@ def contact_post(request):
         # Set default fail message
         message = 'Failed... Try again later.'
         if(cf.is_valid()):
+            # Check for blacklisted words
+            for word in WORD_BLACKLIST:
+                if word in cf.cleaned_data['message']:
+                    # Fake sent response
+                    return HttpResponse("Sent!")
+
             # Create actual object
             cm = ContactMessage()
             cm.name = cf.cleaned_data['name']
