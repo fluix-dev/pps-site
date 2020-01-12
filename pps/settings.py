@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.redirects',
 
     'gallery',
 
@@ -52,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 
     'maintenance_mode.middleware.MaintenanceModeMiddleware',
 ]
@@ -174,3 +177,5 @@ MEDIA_ROOT = GALLERY_ROOT
 MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
 MAINTENANCE_MODE_IGNORE_URLS = ('/maintenance/',)
 MAINTENANCE_MODE_REDIRECT_URL = '/maintenance/'
+
+SITE_ID = 1
