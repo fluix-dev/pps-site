@@ -16,7 +16,7 @@ WORD_BLACKLIST = ['sex', 'porn', 'dating', 'seo']
 
 def get_navbar_context():
     context = {
-        'parent_categories': get_list_or_404(Category, parent=None, hidden=False),
+        'parent_categories': Category.objects.all().filter(parent=None, hidden=False)
     }
     return context
 
