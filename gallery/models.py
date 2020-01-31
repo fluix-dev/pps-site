@@ -66,6 +66,21 @@ class Category(models.Model):
         return self.name
 
 
+class ContactMessage(TimeStampMixin):
+    name = models.CharField(
+        max_length=100, editable=False, help_text="User's name.")
+    email = models.EmailField(editable=False, help_text="User's email.")
+    message = models.TextField(
+        max_length=2047, editable=False, help_text="User's message.")
+
+    class Meta:
+        verbose_name = 'Message'
+        verbose_name_plural = 'Messages'
+
+    def __str__(self):
+        return self.name
+
+
 class Gallery(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(
@@ -129,20 +144,6 @@ class Gallery(models.Model):
     def __str__(self):
         return self.name
 
-
-class ContactMessage(TimeStampMixin):
-    name = models.CharField(
-        max_length=100, editable=False, help_text="User's name.")
-    email = models.EmailField(editable=False, help_text="User's email.")
-    message = models.TextField(
-        max_length=2047, editable=False, help_text="User's message.")
-
-    class Meta:
-        verbose_name = 'Message'
-        verbose_name_plural = 'Messages'
-
-    def __str__(self):
-        return self.name
 
 class Settings(models.Model):
     lock_all = models.BooleanField(default=False, help_text='Lock all galleries.')
