@@ -1,12 +1,14 @@
 import math
 import os
 
-from .models import Category, ContactMessage, Gallery, Settings
+from .models import Category, ContactMessage, Gallery, Order, Settings
 
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 
 from django.conf import settings
 from django.contrib import admin
+from django.db import models
+from django.forms import TextInput, NumberInput
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.urls import path, reverse
@@ -204,6 +206,28 @@ class GalleryAdmin(admin.ModelAdmin):
             im.close()
             watermark.close()
             transparent.close()
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ('Event', {
+            'fields': ('event_category',)
+        }),
+        ('Personal Information', {
+            'fields': ('name','email','phone','number'),
+        }),
+        ('Order', {
+            'fields': ('order_photos', 'order_videos', 'heats'),
+        })
+    )
+
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size':'100'})},
+        models.EmailField: {'widget': TextInput(attrs={'size':'100'})},
+        models.PositiveIntegerField: {'widget': NumberInput(attrs={'size':'100'})},
+        models.PositiveSmallIntegerField: {'widget': NumberInput(attrs={'size':'100'})}
+    }
 
 
 @admin.register(Settings)
