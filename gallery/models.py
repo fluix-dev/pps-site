@@ -66,6 +66,21 @@ class Category(models.Model):
         return self.name
 
 
+class ContactMessage(TimeStampMixin):
+    name = models.CharField(
+        max_length=100, editable=False, help_text="User's name.")
+    email = models.EmailField(editable=False, help_text="User's email.")
+    message = models.TextField(
+        max_length=2047, editable=False, help_text="User's message.")
+
+    class Meta:
+        verbose_name = 'Message'
+        verbose_name_plural = 'Messages'
+
+    def __str__(self):
+        return self.name
+
+
 class Gallery(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(
@@ -130,19 +145,28 @@ class Gallery(models.Model):
         return self.name
 
 
-class ContactMessage(TimeStampMixin):
-    name = models.CharField(
-        max_length=100, editable=False, help_text="User's name.")
-    email = models.EmailField(editable=False, help_text="User's email.")
-    message = models.TextField(
-        max_length=2047, editable=False, help_text="User's message.")
+class Order(models.Model):
+    event_category = models.ForeignKey(Category, related_name='orders', on_delete=models.SET_NULL, blank=True, null=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.PositiveIntegerField(blank=True, null=True)
+    number = models.PositiveSmallIntegerField(verbose_name='Dancer Number')
+    order_photos = models.BooleanField()
+    order_videos = models.BooleanField()
+    heats = models.CharField(max_length=254, blank=True, null=True)
 
-    class Meta:
-        verbose_name = 'Message'
-        verbose_name_plural = 'Messages'
+    PAYMENT_CHOICES = [
+        ('U', 'Unpaid'),
+        ('C', 'Cash'),
+        ('S', 'Square (Card)'),
+        ('E', 'E-Transfer'),
+    ]
+    payment_status = models.CharField(max_length=1, choices=PAYMENT_CHOICES, default='U')
+    payment_amount = models.DecimalField(max_digits=6, decimal_places=2, default=100)
 
     def __str__(self):
         return self.name
+
 
 class Settings(models.Model):
     lock_all = models.BooleanField(default=False, help_text='Lock all galleries.')
