@@ -215,10 +215,10 @@ class OrderAdmin(admin.ModelAdmin):
             'fields': ('event_category',)
         }),
         ('Personal Information', {
-            'fields': ('name','email','phone','number'),
+            'fields': ('name', 'email', 'number', 'phone'),
         }),
         ('Order', {
-            'fields': ('order_photos', 'order_videos', 'heats','payment_amount','payment_status'),
+            'fields': ('order_photos', 'order_videos', 'heats', 'payment_amount', 'payment_status'),
         })
     )
 
