@@ -155,6 +155,15 @@ class Order(models.Model):
     order_videos = models.BooleanField()
     heats = models.CharField(max_length=254, blank=True, null=True)
 
+    PAYMENT_CHOICES = [
+        ('U', 'Unpaid'),
+        ('C', 'Cash'),
+        ('S', 'Square (Card)'),
+        ('E', 'E-Transfer'),
+    ]
+    payment_status = models.CharField(max_length=1, choices=PAYMENT_CHOICES, default='U')
+    payment_amount = models.DecimalField(max_digits=6, decimal_places=2, default=100)
+
     def __str__(self):
         return self.name
 
