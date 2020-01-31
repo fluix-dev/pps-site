@@ -149,7 +149,7 @@ class Order(models.Model):
     event_category = models.ForeignKey(Category, related_name='orders', on_delete=models.SET_NULL, blank=True, null=True)
     name = models.CharField(max_length=100)
     email = models.EmailField()
-    phone = models.PositiveIntegerField()
+    phone = models.PositiveIntegerField(blank=True, null=True)
     number = models.PositiveSmallIntegerField()
     order_photos = models.BooleanField()
     order_videos = models.BooleanField()
