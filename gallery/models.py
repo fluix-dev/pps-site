@@ -145,6 +145,20 @@ class Gallery(models.Model):
         return self.name
 
 
+class Order(models.Model):
+    event_category = models.ForeignKey(Category, related_name='orders', on_delete=models.SET_NULL, blank=True, null=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.PositiveIntegerField()
+    number = models.PositiveSmallIntegerField()
+    order_photos = models.BooleanField()
+    order_videos = models.BooleanField()
+    heats = models.CharField(max_length=254, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Settings(models.Model):
     lock_all = models.BooleanField(default=False, help_text='Lock all galleries.')
     use_x_sendfile = models.BooleanField(default=True, help_text="Whether to send files using Nginx's XSendFile Header or not.")
