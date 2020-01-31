@@ -16,6 +16,9 @@ from PIL import Image
 from threading import Thread
 
 
+import logging
+logger = logging.getLogger(__name__)
+
 class CategoryInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Category
     fields = ('name', 'link_override', 'get_url_html',
@@ -166,13 +169,16 @@ class GalleryAdmin(admin.ModelAdmin):
     def create_thumbnails(self, images, root_url, thumbnail_url):
         maxsize = (256, 256)
         for infile in images:
-            outfile = os.path.join(thumbnail_url, infile)
-            im = Image.open(os.path.join(root_url, infile))
-            im.thumbnail(maxsize, Image.ANTIALIAS)
-            im.save(outfile, "JPEG")
+            try:
+                outfile = os.path.join(thumbnail_url, infile)
+                im = Image.open(os.path.join(root_url, infile))
+                im.thumbnail(maxsize, Image.ANTIALIAS)
+                im.save(outfile, "JPEG")
 
-            # Close image
-            im.close()
+                # Close image
+                im.close()
+            except Exception as e:
+                logger.error('Failed to create thumbnail: ' + str(e)) 
 
     # Create watermarks
     def create_watermarks(self, images, root_url, watermark_url):
