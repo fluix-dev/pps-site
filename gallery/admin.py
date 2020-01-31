@@ -218,12 +218,13 @@ class OrderAdmin(admin.ModelAdmin):
             'fields': ('name','email','phone','number'),
         }),
         ('Order', {
-            'fields': ('order_photos', 'order_videos', 'heats'),
+            'fields': ('order_photos', 'order_videos', 'heats','payment_amount','payment_status'),
         })
     )
 
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
+        models.DecimalField: {'widget': NumberInput(attrs={'size':'100'})},
         models.EmailField: {'widget': TextInput(attrs={'size':'100'})},
         models.PositiveIntegerField: {'widget': NumberInput(attrs={'size':'100'})},
         models.PositiveSmallIntegerField: {'widget': NumberInput(attrs={'size':'100'})}
