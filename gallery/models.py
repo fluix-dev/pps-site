@@ -150,7 +150,7 @@ class Order(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.PositiveIntegerField(blank=True, null=True)
-    number = models.PositiveSmallIntegerField()
+    number = models.PositiveSmallIntegerField(verbose_name='Dancer Number')
     order_photos = models.BooleanField()
     order_videos = models.BooleanField()
     heats = models.CharField(max_length=254, blank=True, null=True)
