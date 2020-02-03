@@ -185,33 +185,36 @@ class GalleryAdmin(admin.ModelAdmin):
     # Create watermarks
     def create_watermarks(self, images, root_url, watermark_url):
         for infile in images:
-            outfile = os.path.join(watermark_url, infile)
+            try:
+                outfile = os.path.join(watermark_url, infile)
 
-            # Open images
-            im = Image.open(os.path.join(root_url, infile))
-            watermark = Image.open(os.path.join(
-                settings.STATIC_ROOT, 'img', 'watermark.png'))
+                # Open images
+                im = Image.open(os.path.join(root_url, infile))
+                watermark = Image.open(os.path.join(
+                    settings.STATIC_ROOT, 'img', 'watermark.png'))
 
-            # Calculate dimensions
-            maxwidth, maxheight = im.size
-            width, height = watermark.size
-            ratio = min(maxwidth / width, maxheight / height)
-            watermark = watermark.resize(
-                (math.floor(width * ratio), math.floor(height * ratio)))
-            width, height = watermark.size
-            watermark_pos = (math.floor(maxwidth / 2 - width / 2),
-                             math.floor(maxheight / 2 - height / 2))
+                # Calculate dimensions
+                maxwidth, maxheight = im.size
+                width, height = watermark.size
+                ratio = min(maxwidth / width, maxheight / height)
+                watermark = watermark.resize(
+                    (math.floor(width * ratio), math.floor(height * ratio)))
+                width, height = watermark.size
+                watermark_pos = (math.floor(maxwidth / 2 - width / 2),
+                                math.floor(maxheight / 2 - height / 2))
 
-            # Create final image
-            transparent = Image.new('RGBA', im.size, (0, 0, 0, 0))
-            transparent.paste(im, (0, 0))
-            transparent.paste(watermark, watermark_pos, mask=watermark)
-            transparent.convert('RGB').save(outfile, "JPEG")
+                # Create final image
+                transparent = Image.new('RGBA', im.size, (0, 0, 0, 0))
+                transparent.paste(im, (0, 0))
+                transparent.paste(watermark, watermark_pos, mask=watermark)
+                transparent.convert('RGB').save(outfile, "JPEG")
 
-            # Close images
-            im.close()
-            watermark.close()
-            transparent.close()
+                # Close images
+                im.close()
+                watermark.close()
+                transparent.close()
+            except Exception as e:
+                logger.error('Failed to create watermark: ' + str(e)) 
 
 
 @admin.register(Order)
