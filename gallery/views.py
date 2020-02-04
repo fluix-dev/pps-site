@@ -33,17 +33,27 @@ def preorder(request):
     return render(request, 'preorder.html', get_navbar_context())
 
 def individual(request):
+    request.session['items'] = [('Individual Image Purchase', 20)]
+    request.session['total'] = 20
     return redirect(reverse('checkout'))
 
 def package(request):
+    request.session['items'] = [('Image Package Purchase', 100)]
+    request.session['total'] = 100
     return redirect(reverse('checkout'))
 
 def checkout(request):
     context = {
-        'total': "%01.2f" % (100)
+        'total': "%01.2f" % (request.session.get('total')),
+        'items': request.session.get('items')
     }
     context.update(get_navbar_context())
     return render(request, 'checkout.html', context)
+
+def charge(request):
+    context = {}
+    context.update(get_navbar_context())
+    return render(request, 'charge.html')
 
 def contact(request):
     context = {
