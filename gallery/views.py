@@ -6,7 +6,7 @@ from .models import Category, ContactMessage, Gallery, Settings
 
 from django.conf import settings
 from django.http import HttpResponse, Http404
-from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.shortcuts import redirect, render, reverse, get_list_or_404, get_object_or_404
 
 from PIL import Image
 
@@ -31,6 +31,12 @@ def maintenance(request):
 
 def preorder(request):
     return render(request, 'preorder.html', get_navbar_context())
+
+def individual(request):
+    return redirect(reverse('index'))
+
+def package(request):
+    return redirect(reverse('index'))
 
 def contact(request):
     context = {
