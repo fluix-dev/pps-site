@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block body %}
+<br><br>
 <section
   class="contact-our-area section-padding-100-0"
   id="contact"
@@ -58,7 +59,7 @@
               Your Personal Information
             </div>
           </div>
-          <form action="{% url 'charge' %}" method="post" id="payment-form">
+          <form action="{% url 'checkout' %}" method="post" id="payment-form">
             {% csrf_token %}
             <div class="row bg-secondary">
               <input

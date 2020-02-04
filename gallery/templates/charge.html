@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<section class="contact-our-area section-padding-100-0" id="contact" style="min-height:95vh">
+  <div class="container">
+    <br><br>
+    <h3>{{type|upper}} </h3>
+    <p>{{msg|safe}}</p>
+    {% if type == 'Error' %}
+    <br><br><br>
+    <h6 class="text-white">Please <a class="text-info" href="{% url 'preorder' %}">Click Here</a> to re-select your purchase. </h6>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

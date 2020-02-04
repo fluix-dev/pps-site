@@ -1,5 +1,6 @@
 import os
 import logging
+import stripe
 
 from .forms import ContactForm
 from .models import Category, ContactMessage, Gallery, Settings
@@ -7,10 +8,13 @@ from .models import Category, ContactMessage, Gallery, Settings
 from django.conf import settings
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect, render, reverse, get_list_or_404, get_object_or_404
+from django.utils.html import mark_safe
 
 from PIL import Image
 
 logger = logging.getLogger(__name__)
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 WORD_BLACKLIST = ['sex', 'porn', 'dating', 'seo']
 
@@ -33,28 +37,96 @@ def preorder(request):
     return render(request, 'preorder.html', get_navbar_context())
 
 def individual(request):
-    request.session['items'] = [('Individual Image Purchase', 20)]
+    request.session['items'] = [('Individual Photo', 20)]
     request.session['total'] = 20
     return redirect(reverse('checkout'))
 
 def package(request):
-    request.session['items'] = [('Image Package Purchase', 100)]
+    request.session['items'] = [('Photo Package', 100)]
     request.session['total'] = 100
     return redirect(reverse('checkout'))
 
 def checkout(request):
-    context = {
-        'total': "%01.2f" % (request.session.get('total')),
-        'items': request.session.get('items'),
-        'key': settings.STRIPE_PUBLISHABLE_KEY
-    }
-    context.update(get_navbar_context())
-    return render(request, 'checkout.html', context)
+    if request.POST:
+        print('POST REQUET')
+        stripe_url = 'https://dashboard.stripe.com/test/payments/'
+        request.session['type'] = 'Error'
+        #Tickets are all clear,
+        try:
+            #Customer creation based off email
+            customer   = stripe.Customer.create(
+                name   = request.POST['name'],
+                email  = request.POST['email'],
+                source = request.POST['stripeToken'],
+            )
+
+            #Charge generation
+            charge = stripe.Charge.create(
+                customer      = customer.id,
+                amount        = request.session.get('total')*100,
+                currency      = 'cad',
+                description   = request.session.get('items')[0][0],
+                receipt_email = customer.email,
+            )
+
+            #Complete url
+            stripe_url += charge.id
+
+            #Set status as succesful
+            request.session['type'] = 'Success'
+            request.session['msg'] = mark_safe('Thank you for purchasing tickets. A receipt has been sent to your email, ' + customer.email + '.<br><br> You can also view your receipt here: <a class="text-info" href="' + charge.receipt_url + '">View Receipt</a>')
+
+        except stripe.error.CardError as e:
+            print(e)
+            # Since it's a decline, stripe.error.CardError will be caught
+            request.session['msg'] = 'Your card has been declined. Please make sure that the Number, CVC, and Zip Code are correct. Make sure you have enough funds on your card, then try again.'
+        except stripe.error.RateLimitError as e:
+            # Too many requests made to the API too quickly
+            print(e)
+            logger.warning(e)
+            request.session['msg'] = 'An error has occurred. Please try again in a few minutes. Your card has not been charged.'
+        except stripe.error.InvalidRequestError as e:
+            # Invalid parameters were supplied to Stripe's API
+            print(e)
+            logger.error(e)
+            request.session['msg'] = 'An error has occurred. Please try again in a few minutes. Administrators have been notified. Your card has not been charged.'
+        except stripe.error.AuthenticationError as e:
+            # Authentication with Stripe's API failed
+            # (maybe you changed API keys recently)
+            print(e)
+            logger.error(e)
+            request.session['msg'] = 'An error has occurred. Please try again in a few minutes. Administrators have been notified. Your card has not been charged.'
+        except stripe.error.APIConnectionError as e:
+            # Network communication with Stripe failed
+            print(e)
+            logger.error(e)
+            request.session['msg'] = 'An error has occurred. Please try again in a few minutes. Administrators have been notified. Your card has not been charged.'
+        except stripe.error.StripeError as e:
+            # Display a very generic error to the user, and maybe send
+            # yourself an email
+            print(e)
+            logger.error(e)
+            request.session['msg'] = 'An error has occurred. Please try again in a few minutes. Administrators have been notified. Your card has not been charged.'
+        return redirect('charge')
+
+    else:
+        context = {
+            'total': "%01.2f" % (request.session.get('total')),
+            'items': request.session.get('items'),
+            'key': settings.STRIPE_PUBLISHABLE_KEY
+        }
+        context.update(get_navbar_context())
+        return render(request, 'checkout.html', context)
 
 def charge(request):
-    context = {}
+    context = {
+        'type': request.session.get('type'),
+        'msg': request.session.get('msg')
+    }
     context.update(get_navbar_context())
-    return render(request, 'charge.html')
+    del request.session['items']
+    del request.session['total']
+    return render(request, 'charge.html', context)
 
 def contact(request):
     context = {
