@@ -45,7 +45,8 @@ def package(request):
 def checkout(request):
     context = {
         'total': "%01.2f" % (request.session.get('total')),
-        'items': request.session.get('items')
+        'items': request.session.get('items'),
+        'key': settings.STRIPE_PUBLISHABLE_KEY
     }
     context.update(get_navbar_context())
     return render(request, 'checkout.html', context)
