@@ -33,10 +33,17 @@ def preorder(request):
     return render(request, 'preorder.html', get_navbar_context())
 
 def individual(request):
-    return redirect(reverse('index'))
+    return redirect(reverse('checkout'))
 
 def package(request):
-    return redirect(reverse('index'))
+    return redirect(reverse('checkout'))
+
+def checkout(request):
+    context = {
+        'total': "%01.2f" % (100)
+    }
+    context.update(get_navbar_context())
+    return render(request, 'checkout.html', context)
 
 def contact(request):
     context = {

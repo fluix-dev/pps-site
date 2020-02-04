@@ -6,6 +6,7 @@ urlpatterns = [
     path('preorder/', views.preorder, name='preorder'),
     path('preorder/package', views.package, name='package'),
     path('preorder/individual', views.individual, name='individual'),
+    path('preorder/checkout', views.checkout, name='checkout'),
     path('contact/', views.contact, name='contact'),
     path('contact_post/', views.contact_post, name='contact_post'),
     path('help/', views.download_help, name='help'),
