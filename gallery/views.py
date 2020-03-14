@@ -7,7 +7,7 @@ from .models import Category, ContactMessage, Gallery, Settings
 
 from django.conf import settings
 from django.http import HttpResponse, Http404
-from django.shortcuts import redirect, render, reverse, get_list_or_404, get_object_or_404
+from django.shortcuts import redirect, render, reverse, get_object_or_404
 from django.utils.html import mark_safe
 
 from PIL import Image
