@@ -118,14 +118,9 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers':['file', 'warning'],
+            'handlers':['file', 'warning', 'discord'],
             'propagate': True,
             'level':'DEBUG',
-        },
-        'django': {
-            'handlers':['discord'],
-            'propagate': True,
-            'level':'INFO',
         },
         'django.request': {
             'handlers': ['discord'],
