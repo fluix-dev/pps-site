@@ -74,7 +74,7 @@ def checkout(request):
 
             #Set status as succesful
             request.session['type'] = 'Success'
-            request.session['msg'] = mark_safe('Thank you for purchasing tickets. A receipt has been sent to your email, ' + customer.email + '.<br><br> You can also view your receipt here: <a class="text-info" href="' + charge.receipt_url + '">View Receipt</a>')
+            request.session['msg'] = mark_safe('Thank you for purchasing pictures. A receipt has been sent to your email, ' + customer.email + '.<br><br> You can also view your receipt here: <a class="text-info" href="' + charge.receipt_url + '">View Receipt</a>')
 
         except stripe.error.CardError as e:
             print(e)
