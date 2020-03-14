@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     'adminsortable2',
     'maintenance_mode',
+    'discord_integration',
+    'solo',
 ]
 
 MIDDLEWARE = [
@@ -109,12 +111,21 @@ LOGGING = {
             'filename': 'warning.log',
             'formatter': 'verbose'
         },
+        'discord': {
+            'level': 'INFO',
+            'class': 'discord_integration.log.DiscordMessageHandler',
+        },
     },
     'loggers': {
         'django': {
             'handlers':['file', 'warning'],
             'propagate': True,
             'level':'DEBUG',
+        },
+        'django': {
+            'handlers':['discord'],
+            'propagate': True,
+            'level':'INFO',
         },
     }
 }
@@ -182,5 +193,5 @@ SITE_ID = 1
 
 SECURE_CONTENT_TYPE_NOSNIFF = False
 
-STRIPE_SECRET_KEY = 'xxx'
-STRIPE_PUBLISHABLE_KEY = 'xxx'
+STRIPE_SECRET_KEY = 'sk_live_illSFEGShpOEpAgaQhM40YFX00YcCWrZFx'
+STRIPE_PUBLISHABLE_KEY = 'pk_live_WS9hcXII16NVtuNVJtBfuWC800MyWanHif'
