@@ -127,8 +127,14 @@ LOGGING = {
             'propagate': True,
             'level':'INFO',
         },
+        'django.request': {
+            'handlers': ['discord'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
     }
 }
+
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
