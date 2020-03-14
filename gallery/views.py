@@ -110,6 +110,9 @@ def checkout(request):
         return redirect('charge')
 
     else:
+        if (not request.session.get('total') or not request.session.get('items')):
+            return redirect('preorder')
+
         context = {
             'total': "%01.2f" % (request.session.get('total')),
             'items': request.session.get('items'),
@@ -119,6 +122,9 @@ def checkout(request):
         return render(request, 'checkout.html', context)
 
 def charge(request):
+    if (not request.session.get('type') or not request.session.get('msg')):
+        return redirect('checkout')
+
     context = {
         'type': request.session.get('type'),
         'msg': request.session.get('msg')
