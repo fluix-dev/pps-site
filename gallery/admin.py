@@ -179,7 +179,7 @@ class GalleryAdmin(admin.ModelAdmin):
                 # Close image
                 im.close()
             except Exception as e:
-                logger.error('Failed to create thumbnail: ' + str(e)) 
+                logger.error('Failed to create thumbnail: ' + str(e))
 
     # Create watermarks
     def create_watermarks(self, images, root_url, watermark_url):
@@ -213,7 +213,7 @@ class GalleryAdmin(admin.ModelAdmin):
                 watermark.close()
                 transparent.close()
             except Exception as e:
-                logger.error('Failed to create watermark: ' + str(e)) 
+                logger.error('Failed to create watermark: ' + str(e))
 
 
 @admin.register(Order)
