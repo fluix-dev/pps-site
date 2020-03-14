@@ -42,7 +42,7 @@ class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(CategoryAdmin, self).get_queryset(request)
 
-        # Show only root directorie
+        # Show only root directories
         uuid_string = str(request).split("/")[4]
         if (uuid_string == "'>" and not request.GET.get('all') == 'true'):
             return qs.filter(parent=None)
@@ -97,7 +97,6 @@ class GalleryAdmin(admin.ModelAdmin):
     ordering = ('category__name','name')
 
     def account_actions(self, obj):
-        # TODO: Render action buttons
         return format_html(
             '<a class="button" href="{}">Generate Thumbnails</a>&nbsp;'
             '<a class="button" href="{}">Generate Watermarks</a>&nbsp;'
