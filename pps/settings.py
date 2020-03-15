@@ -127,6 +127,11 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
+        'gallery': {
+            'handlers':['discord'],
+            'propgate': True,
+            'level':'DEBUG',
+        },
     }
 }
 
