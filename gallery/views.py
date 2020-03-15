@@ -212,7 +212,7 @@ def contact_post(request):
             cm.message = cf.cleaned_data['message']
             cm.save()
 
-            logger.info('New contact message: %s', request.build_absolute_uri(reverse('admin:gallery_contactmessage_view', args=cm.id)))
+            logger.info('New contact message: %s', request.build_absolute_uri(reverse('admin:gallery_contactmessage_view', args=(cm.id,))))
 
             # Success Message
             message = "Sent!"
