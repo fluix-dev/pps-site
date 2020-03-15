@@ -212,6 +212,8 @@ def contact_post(request):
             cm.message = cf.cleaned_data['message']
             cm.save()
 
+            logger.info('New contact message: %s', cf.message)
+
             # Success Message
             message = "Sent!"
 
