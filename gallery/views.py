@@ -212,7 +212,7 @@ def contact_post(request):
             cm.message = cf.cleaned_data['message']
             cm.save()
 
-            logger.info('New contact message: %s', cm.message)
+            logger.info('New contact message: %s', cm.message_truncate())
 
             # Success Message
             message = "Sent!"
