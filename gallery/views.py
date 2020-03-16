@@ -48,7 +48,6 @@ def package(request):
 
 def checkout(request):
     if request.POST:
-        print('POST REQUET')
         stripe_url = 'https://dashboard.stripe.com/test/payments/'
         request.session['type'] = 'Error'
 
@@ -78,34 +77,28 @@ def checkout(request):
             request.session['msg'] = mark_safe('Thank you for purchasing pictures. A receipt has been sent to your email, ' + customer.email + '.<br><br> You can also view your receipt here: <a class="text-info" href="' + charge.receipt_url + '">View Receipt</a>')
 
         except stripe.error.CardError as e:
-            print(e)
             # Since it's a decline, stripe.error.CardError will be caught
             request.session['msg'] = 'Your card has been declined. Please make sure that the Number, CVC, and Zip Code are correct. Make sure you have enough funds on your card, then try again.'
         except stripe.error.RateLimitError as e:
             # Too many requests made to the API too quickly
-            print(e)
             logger.warning(e)
             request.session['msg'] = 'An error has occurred. Please try again in a few minutes. Your card has not been charged.'
         except stripe.error.InvalidRequestError as e:
             # Invalid parameters were supplied to Stripe's API
-            print(e)
             logger.error(e)
             request.session['msg'] = 'An error has occurred. Please try again in a few minutes. Administrators have been notified. Your card has not been charged.'
         except stripe.error.AuthenticationError as e:
             # Authentication with Stripe's API failed
             # (maybe you changed API keys recently)
-            print(e)
             logger.error(e)
             request.session['msg'] = 'An error has occurred. Please try again in a few minutes. Administrators have been notified. Your card has not been charged.'
         except stripe.error.APIConnectionError as e:
             # Network communication with Stripe failed
-            print(e)
             logger.error(e)
             request.session['msg'] = 'An error has occurred. Please try again in a few minutes. Administrators have been notified. Your card has not been charged.'
         except stripe.error.StripeError as e:
             # Display a very generic error to the user, and maybe send
             # yourself an email
-            print(e)
             logger.error(e)
             request.session['msg'] = 'An error has occurred. Please try again in a few minutes. Administrators have been notified. Your card has not been charged.'
         return redirect('charge')
