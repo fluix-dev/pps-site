@@ -51,6 +51,7 @@ def checkout(request):
         print('POST REQUET')
         stripe_url = 'https://dashboard.stripe.com/test/payments/'
         request.session['type'] = 'Error'
+
         #Tickets are all clear,
         try:
             #Customer creation based off email
