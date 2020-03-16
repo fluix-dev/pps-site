@@ -178,7 +178,7 @@ class Settings(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk and Settings.objects.exists():
-            raise ValidationError('There is can be only one Settings instance.')
+            raise ValidationError('There can only be one Settings instance.')
         return super(Settings, self).save(*args, **kwargs)
 
     def __str__(self):
