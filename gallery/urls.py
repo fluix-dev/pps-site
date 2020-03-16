@@ -18,7 +18,7 @@ urlpatterns = [
     # Contact
     path('contact/', views.contact, name='contact'),
     path('contact_post/', views.contact_post, name='contact_post'),
-    
+
     # Dynamic pages
     path('c/<uuid:category_id>', views.category, name='category'),
     path('g/<uuid:gallery_id>', views.gallery, name='gallery'),
