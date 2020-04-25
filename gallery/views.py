@@ -212,7 +212,7 @@ def contact_post(request):
             message = "Sent!"
 
         return HttpResponse(message)
-    return Http404()
+    raise Http404()
 
 
 # Serve full gallery thumbnail
