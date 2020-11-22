@@ -86,55 +86,37 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pps.wsgi.application'
 
+# Logging
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            "datefmt": "%Y-%b-%d %H:%M:%S",
         },
     },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'debug.log',
-            'formatter': 'verbose'
+    "handlers": {
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
         },
-        'warning': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': 'warning.log',
-            'formatter': 'verbose'
-        },
-        'discord': {
-            'level': 'INFO',
-            'class': 'discord_integration.log.DiscordMessageHandler',
+        "file": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "maxBytes": 1024*1024*10,  # 10 MB
+            "backupCount": 4,
+            "filename": "/var/log/pps/pps.log",
+            "formatter": "verbose",
         },
     },
-    'loggers': {
-        'django': {
-            'handlers':['file', 'warning', 'discord'],
-            'propagate': True,
-            'level':'DEBUG',
+    "loggers": {
+        "": {
+            "handlers": ["file", "mail_admins"],
+            "level": "INFO",
         },
-        'django.request': {
-            'handlers': ['discord'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        'gallery': {
-            'handlers':['discord'],
-            'propgate': True,
-            'level':'DEBUG',
-        },
-    }
+    },
 }
-
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
