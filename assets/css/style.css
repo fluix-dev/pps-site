@@ -120,3 +120,14 @@ img.nav-img {
 .navlink {
     text-decoration: none;
 }
+
+footer {
+    text-align: center;
+    color: gray;
+    margin-top: 1rem;
+}
+
+footer a, footer a:hover {
+    color: gray;
+    text-decoration: underline;
+}
