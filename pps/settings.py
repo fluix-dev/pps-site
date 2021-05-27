@@ -43,8 +43,6 @@ INSTALLED_APPS = [
     'gallery',
 
     'adminsortable2',
-    'maintenance_mode',
-    'discord_integration',
     'solo',
 ]
 
@@ -57,12 +55,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-
-    'maintenance_mode.middleware.MaintenanceModeMiddleware',
-]
-
-CONTEXT_PROCESSORS = [
-    'maintenance_mode.context_processors.maintenance_mode',
 ]
 
 ROOT_URLCONF = 'pps.urls'
@@ -173,10 +165,8 @@ GALLERY_ROOT = os.path.join(BASE_DIR, 'protected')
 
 MEDIA_ROOT = GALLERY_ROOT
 
-MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
-MAINTENANCE_MODE_IGNORE_URLS = ('/maintenance/',)
-MAINTENANCE_MODE_REDIRECT_URL = '/maintenance/'
-
 SITE_ID = 1
 
 SECURE_CONTENT_TYPE_NOSNIFF = False
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
