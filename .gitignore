@@ -58,6 +58,7 @@ db.sqlite3
 /media
 /ppsenv
 /protected
+/static
 
 # Flask stuff:
 instance/

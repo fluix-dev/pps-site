@@ -8,5 +8,5 @@ Create a modified settings file, likely as `pps/local_settings.py` which copies 
 ```sh
 $ pip install -r requirements.txt
 $ python manage.py migrate --settings=pps.local_settings
-$ python manage.py runserver --nostatic --settings=pps.local_settings`
+$ python manage.py runserver --settings=pps.local_settings`
 ```
